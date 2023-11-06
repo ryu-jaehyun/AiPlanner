@@ -13,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
+                .exposedHeaders("X-AUTH-TOKEN")
                 .allowedOrigins("http://localhost:3000")
                 .allowedMethods("*") // 기타 설정
                 .allowedHeaders("*");
