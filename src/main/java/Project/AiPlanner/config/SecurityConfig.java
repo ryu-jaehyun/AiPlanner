@@ -29,7 +29,7 @@ import java.util.List;
 @EnableWebSecurity
 @EnableMethodSecurity
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig  {
     private final TokenProvider tokenProvider;
     private final CorsFilter corsFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -64,7 +64,7 @@ public class SecurityConfig {
         http
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf(csrf -> csrf.disable())
-                .cors(cors->cors.disable())
+
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(jwtAccessDeniedHandler)
