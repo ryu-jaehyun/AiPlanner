@@ -50,13 +50,7 @@ public class SecurityConfig {
         http
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf(csrf -> csrf.disable())
-                .cors(cors-> cors
-                        .configurationSource(request -> {
-                            CorsConfiguration config = new CorsConfiguration();
-                            config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-                            config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-                            config.setAllowedHeaders(Collections.singletonList("*"));
-                            return config;}))
+
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(jwtAccessDeniedHandler)
