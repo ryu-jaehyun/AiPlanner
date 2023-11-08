@@ -28,7 +28,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
 
 

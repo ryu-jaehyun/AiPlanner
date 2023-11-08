@@ -25,7 +25,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
+
 
     //signup()을 통해 가입한 회원은 USER ROLE을 가지고 있다.
     @Transactional
