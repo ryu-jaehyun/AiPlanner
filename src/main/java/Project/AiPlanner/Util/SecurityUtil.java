@@ -33,4 +33,11 @@ public class SecurityUtil {
     // 사용자 이름을 감싸고 있는 Optional 객체를 반환합니다. Optional을 사용하여 사용자 이름이 null인 경우에 대비할 수 있습니다.
         return Optional.ofNullable(username);
     }
+    public static String getCurrentUserId() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication.getName() == null) {
+            throw new RuntimeException("No authentication information.");
+        }
+        return authentication.getName();
+    }
 }

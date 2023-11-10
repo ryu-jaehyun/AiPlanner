@@ -6,6 +6,7 @@ import Project.AiPlanner.Plan.entity.day.FixPlanEntity;
 import Project.AiPlanner.Plan.respository.day.FixPlanRepository;
 import Project.AiPlanner.Plan.service.day.FixPlanService;
 import Project.AiPlanner.User.Dto.UserFormDto;
+import Project.AiPlanner.Util.SecurityUtil;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/plan/day")
 public class FixPlanController {
 
-    @Autowired
-    private FixPlanService fixPlanService;
+    private final FixPlanService fixPlanService;
+    private final FixPlanRepository fixPlanRepository;
 
     @Autowired
-    private FixPlanRepository fixPlanRepository;
+    public FixPlanController(FixPlanService fixPlanService, FixPlanRepository fixPlanRepository) {
+        this.fixPlanService = fixPlanService;
+        this.fixPlanRepository = fixPlanRepository;
+    }
 
     @PostMapping("/add")
    // @CrossOrigin(origins = "*")
     public ResponseEntity<String> createDayPlanFix(@Valid @RequestBody FixPlanDto fixPlanDto) {
 
+        String currentUserId = SecurityUtil.getCurrentUserId();
+        fixPlanDto.setUserId(currentUserId);
 
 
         if(fixPlanService.saveFixPlan(fixPlanDto)!=false)

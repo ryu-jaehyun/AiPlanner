@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 public class FixPlanDto {
 
 
-    @NotNull(message = "아이디는 필수 값입니다.")
-    private String userId;
+
+    private String userId =null;
 
     @NotNull(message = "일정이름은 필수 값입니다.")
     private String planName;

@@ -17,15 +17,24 @@ public class FixPlanService {
 
     public boolean saveFixPlan(FixPlanDto fixPlanDto) {
 
-        FixPlanEntity fixPlanEntity = FixPlanEntity.builder().planName(fixPlanDto.getPlanName()).userId(fixPlanDto.getUserId())
-                .planType(fixPlanDto.getPlanType()).start(fixPlanDto.getStart()).end(fixPlanDto.getEnd()).build();
+        try {
+            FixPlanEntity fixPlanEntity = FixPlanEntity.builder()
+                    .planName(fixPlanDto.getPlanName())
+                    .userId(fixPlanDto.getUserId())
+                    .planType(fixPlanDto.getPlanType())
+                    .start(fixPlanDto.getStart())
+                    .end(fixPlanDto.getEnd())
+                    .build();
 
+            FixPlanEntity savedEntity = fixPlanRepository.save(fixPlanEntity);
 
-        if(fixPlanEntity!=null){
-            fixPlanRepository.save(fixPlanEntity);
-            return true;
+            return savedEntity != null; // 저장이 성공했으면 true, 실패했으면 false 반환
+        } catch (Exception e) {
+            // 예외 발생 시 로깅 또는 다른 처리를 추가할 수 있습니다.
+            log.error("FixPlan save failed : {}", e);
+            return false; // 예외 발생 시 false 반환
+        }
     }
-    else return false;}
 
     public FixPlanEntity getFixPlanById(int id) {
         return fixPlanRepository.findById(id).orElse(null);

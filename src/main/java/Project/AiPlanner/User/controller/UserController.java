@@ -18,10 +18,15 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UserService userService;
+
+    private final UserRepository userRepository;
+
+    private final UserService userService;
+
+    public UserController(UserRepository userRepository, UserService userService) {
+        this.userRepository = userRepository;
+        this.userService = userService;
+    }
 
     //아이디 중복 검증
     @CrossOrigin(origins = "*")
