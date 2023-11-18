@@ -38,6 +38,6 @@ public class SecurityUtil {
         if (authentication == null || authentication.getName() == null) {
             throw new RuntimeException("No authentication information.");
         }
-        return authentication.getName();
+        return authentication.getName(); //여기서 발전해야될점 --> userId를 조회못하나? username밖에 못하나?
     }
 }

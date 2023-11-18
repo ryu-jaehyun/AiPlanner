@@ -1,4 +1,4 @@
-package Project.AiPlanner.Plan.entity.day;
+package Project.AiPlanner.Plan.entity.month;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 @Setter
-@Table(name = "dayPlanFix")
-public class FixPlanEntity {
+@Table(name = "monthPlan")
+public class MonthPlanEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dayPlanFixId")
-    private int dayPlanFixId;
+    @Column(name = "monthPlanId")
+    private int monthPlanId;
 
     @Column(name = "user_id", nullable = false,length = 20)
     private String userId;
@@ -36,5 +36,3 @@ public class FixPlanEntity {
 
     // 나머지 필드 및 메소드 추가
 }
-
-

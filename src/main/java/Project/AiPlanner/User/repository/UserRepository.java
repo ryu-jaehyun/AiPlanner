@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
     List<UserEntity> findByUserId(String userId);
     @EntityGraph(attributePaths = "authorities")
     Optional<UserEntity> findOneWithAuthoritiesByUserName(String username);
+    // 새로운 메서드 추가
+    Optional<UserEntity> findByUserName(String userName);
+
 }

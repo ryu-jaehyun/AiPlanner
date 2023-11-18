@@ -1,16 +1,17 @@
-package Project.AiPlanner.Plan.Dto.day;
+package Project.AiPlanner.Plan.Dto.month;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
-public class FixPlanDto {
+public class MonthPlanDto {
 
 
 

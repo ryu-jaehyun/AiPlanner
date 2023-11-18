@@ -16,16 +16,16 @@ import java.time.LocalDateTime;
 public class FlowPlanEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dayPlanFixId")
-    private int dayPlanFixId;
+    @Column(name = "dayPlanFlowId")
+    private int dayPlanFlowId;
 
-    @Column(name = "userId", nullable = false,length = 20)
+    @Column(name = "user_id", nullable = false,length = 20)
     private String userId;
 
-    @Column(name = "planName", nullable = false,length = 30)
+    @Column(name = "plan_name", nullable = false,length = 30)
     private String planName;
 
-    @Column(name = "planType",nullable = false, length = 20)
+    @Column(name = "plan_type",nullable = false, length = 20)
     private String planType;
 
     @Column(name = "start",nullable = false)

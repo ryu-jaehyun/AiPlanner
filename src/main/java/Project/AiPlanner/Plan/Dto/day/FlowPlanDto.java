@@ -5,12 +5,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
-public class FixPlanDto {
+public class FlowPlanDto {
 
 
 

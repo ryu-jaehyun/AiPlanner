@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -26,6 +27,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
+    public String findByUserName(String userName) {
+        // UserRepository에서 findByUserName을 이용하여 UserEntity를 가져옴
+        Optional<UserEntity> userEntityOptional = userRepository.findByUserName(userName);
+
+        // 가져온 UserEntity가 존재하면 userId를 반환, 그렇지 않으면 예외 처리 또는 기본값 등을 적용
+        return userEntityOptional.map(UserEntity::getUserId)
+                .orElseThrow(() -> new RuntimeException("User not found for userName: " + userName));
+    }
 
     //signup()을 통해 가입한 회원은 USER ROLE을 가지고 있다.
     @Transactional
