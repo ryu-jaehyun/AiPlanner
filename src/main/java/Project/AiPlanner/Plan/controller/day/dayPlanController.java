@@ -1,14 +1,13 @@
-package Project.AiPlanner.Plan.controller.month;
+package Project.AiPlanner.Plan.controller.day;
 
 
 import Project.AiPlanner.Plan.Dto.day.DayPlanDeleteDto;
+import Project.AiPlanner.Plan.Dto.day.DayPlanDto;
 import Project.AiPlanner.Plan.Dto.day.DayPlanUpdateDto;
-import Project.AiPlanner.Plan.Dto.month.MonthPlanDeleteDto;
-import Project.AiPlanner.Plan.Dto.month.MonthPlanDto;
-import Project.AiPlanner.Plan.Dto.month.MonthPlanUpdateDto;
 import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
-import Project.AiPlanner.Plan.entity.month.MonthPlanEntity;
+import Project.AiPlanner.Plan.respository.day.DayPlanRepository;
 import Project.AiPlanner.Plan.respository.month.MonthPlanRepository;
+import Project.AiPlanner.Plan.service.day.DayPlanService;
 import Project.AiPlanner.Plan.service.month.MonthPlanService;
 import Project.AiPlanner.User.service.UserService;
 import Project.AiPlanner.Util.SecurityUtil;
@@ -23,23 +22,23 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/plan/month")
-public class MonthPlanController {
+@RequestMapping("/plan/day")
+public class dayPlanController {
 
-    private final MonthPlanRepository monthPlanRepository;
-    private final MonthPlanService monthPlanService;
+    private final DayPlanService dayPlanService;
+    private final DayPlanRepository dayPlanRepository;
     private final UserService userService;
 
     @Autowired
-    public MonthPlanController(MonthPlanRepository monthPlanRepository, MonthPlanService monthPlanService, UserService userService) {
-        this.monthPlanRepository = monthPlanRepository;
-        this.monthPlanService = monthPlanService;
+    public dayPlanController(DayPlanService dayPlanService, DayPlanRepository dayPlanRepository, UserService userService) {
+        this.dayPlanService = dayPlanService;
+        this.dayPlanRepository = dayPlanRepository;
         this.userService = userService;
     }
 
     @PostMapping("/add")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Object> createMonthPlan(@Valid @RequestBody MonthPlanDto monthPlanDto) {
+    public ResponseEntity<Object> createDayPlan(@Valid @RequestBody DayPlanDto dayPlanDto) {
 
         String currentUserName = SecurityUtil.getCurrentUserId();
 
@@ -48,18 +47,20 @@ public class MonthPlanController {
         String userId = userService.findByUserName(currentUserName);
 
 
-        if (monthPlanService.saveMonthPlan(monthPlanDto, userId)) {
-            List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);
-            return ResponseEntity.ok(monthPlanEntities);} // Returning entities directly
-        else
+        if (dayPlanService.
+                savePlan(dayPlanDto, userId)) {
+            List<DayPlanEntity> dayPlanEntities = dayPlanRepository.findByUserId(userId);
+            return ResponseEntity.ok(dayPlanEntities); // Returning entities directly
+        } else {
             return new ResponseEntity<>("요청이 잘못되었습니다. 다시 일정을 확인해주세요", HttpStatus.BAD_REQUEST);
-
-
+        }
     }
+
+
 
     @PostMapping("/delete")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Object> deleteMonthPlan(@Valid @RequestBody MonthPlanDeleteDto monthPlanDeleteDto) {
+    public ResponseEntity<Object> deleteDayPlan(@Valid @RequestBody DayPlanDeleteDto dayPlanDeleteDto) {
 
 
         String currentUserName = SecurityUtil.getCurrentUserId();
@@ -67,13 +68,13 @@ public class MonthPlanController {
 
 
         String userId = userService.findByUserName(currentUserName);
-        Integer planId = monthPlanDeleteDto.getPlanId();
+        Integer planId = dayPlanDeleteDto.getPlanId();
         log.info("userid={}", userId);
         log.info("planid ={}", planId);
 
-        if(monthPlanService.deleteMonthPlan(planId, userId)){
-            List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);
-            return ResponseEntity.ok(monthPlanEntities); // Returning entities directly
+        if(dayPlanService.deleteDayPlan(planId, userId)){
+            List<DayPlanEntity> dayPlanEntities = dayPlanRepository.findByUserId(userId);
+            return ResponseEntity.ok(dayPlanEntities); // Returning entities directly
         }
         else {
             return new ResponseEntity<>("요청이 잘못되었습니다. 삭제할 일정을 다시 확인해주세요", HttpStatus.BAD_REQUEST);
@@ -81,16 +82,16 @@ public class MonthPlanController {
     }
     @PatchMapping("/update")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Object> updateMonthPlan(@RequestBody MonthPlanUpdateDto monthPlanUpdateDto){
+    public ResponseEntity<Object> updateDayPlan(@Valid @RequestBody DayPlanUpdateDto dayPlanUpdateDto){
         String currentUserName = SecurityUtil.getCurrentUserId();
 
 
 
         String userId = userService.findByUserName(currentUserName);
-        Integer planId = monthPlanUpdateDto.getPlanId();
-        if(monthPlanService.updateMonthPlan(planId, userId,monthPlanUpdateDto)){
-            List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);
-            return ResponseEntity.ok(monthPlanEntities); // Returning entities directly
+        Integer planId = dayPlanUpdateDto.getPlanId();
+        if(dayPlanService.updateDayPlan(planId, userId,dayPlanUpdateDto)){
+            List<DayPlanEntity> dayPlanEntities = dayPlanRepository.findByUserId(userId);
+            return ResponseEntity.ok(dayPlanEntities); // Returning entities directly
         }
         else {
             return new ResponseEntity<>("요청이 잘못되었습니다. 삭제할 일정을 다시 확인해주세요", HttpStatus.BAD_REQUEST);

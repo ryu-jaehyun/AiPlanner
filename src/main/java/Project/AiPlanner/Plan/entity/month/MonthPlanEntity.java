@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 public class MonthPlanEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "monthPlanId")
-    private int monthPlanId;
+    @Column(name = "plan_id")
+    private int planId;
 
     @Column(name = "user_id", nullable = false,length = 20)
     private String userId;

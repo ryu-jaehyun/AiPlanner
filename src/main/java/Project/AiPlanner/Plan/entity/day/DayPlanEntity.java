@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 @Setter
-@Table(name = "dayPlanFix")
-public class FixPlanEntity {
+@Table(name = "dayPlan")
+public class DayPlanEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dayPlanFixId")
-    private int dayPlanFixId;
+    @Column(name = "plan_id")
+    private Integer planId;
 
     @Column(name = "user_id", nullable = false,length = 20)
     private String userId;
@@ -34,6 +34,8 @@ public class FixPlanEntity {
     @Column(name = "end",nullable = false)
     private LocalDateTime end;
 
+    @Column(name = "plan",nullable = false, length = 10)
+    private String plan;
     // 나머지 필드 및 메소드 추가
 }
 

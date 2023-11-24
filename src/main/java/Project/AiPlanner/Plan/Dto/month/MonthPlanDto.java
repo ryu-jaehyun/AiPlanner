@@ -23,12 +23,12 @@ public class MonthPlanDto {
     @NotNull(message = "일정종류는 필수 값입니다.")
     private String planType;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @NotNull(message = "시작시간은 필수 값입니다.")
     private LocalDateTime start;
 
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @NotNull(message = "종료시간은 필수 값입니다.")
     private LocalDateTime end;
 

@@ -1,19 +1,20 @@
 package Project.AiPlanner.Plan.service.month;
 
 
-import Project.AiPlanner.Plan.Dto.day.FixPlanDto;
-import Project.AiPlanner.Plan.Dto.day.FlowPlanDto;
+import Project.AiPlanner.Plan.Dto.day.DayPlanUpdateDto;
 import Project.AiPlanner.Plan.Dto.month.MonthPlanDto;
-import Project.AiPlanner.Plan.entity.day.FixPlanEntity;
-import Project.AiPlanner.Plan.entity.day.FlowPlanEntity;
+import Project.AiPlanner.Plan.Dto.month.MonthPlanUpdateDto;
+import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
 import Project.AiPlanner.Plan.entity.month.MonthPlanEntity;
 import Project.AiPlanner.Plan.respository.month.MonthPlanRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,5 +55,57 @@ public class MonthPlanService {
     public MonthPlanDto convertToMonthDto(MonthPlanEntity entity) {
         return modelMapper.map(entity, MonthPlanDto.class);
         // Assuming ModelMapper is used for mapping between entity and DTO
+    }
+
+    @Transactional   //일반적으로 DB 데이터를 등록/수정/삭제하는 Service메서드는 @Transactional을 필수적으로 가져간다.
+    public boolean deleteMonthPlan(Integer planId,String userId) {
+        try {
+            log.info("planid={}",planId);
+            monthPlanRepository.deleteByUserIdAndPlanId(userId, planId);
+            return true;
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+    @Transactional
+    public boolean updateMonthPlan(Integer planId,String userId, MonthPlanUpdateDto monthPlanUpdateDto) {
+        try {
+            Optional<MonthPlanEntity> optionalMonthPlan = monthPlanRepository.findByPlanIdAndUserId(planId,userId);
+
+            if (optionalMonthPlan.isPresent()) {
+                MonthPlanEntity monthPlan = optionalMonthPlan.get();
+                if (!monthPlan.getUserId().equals(userId)) {
+                    return false; // User does not have permission to update this plan
+                }
+                // Check and update fields if they are not null in the DTO
+                if (monthPlanUpdateDto.getPlanName() != null) {
+                    monthPlan.setPlanName(monthPlanUpdateDto.getPlanName());
+                }
+                if (monthPlanUpdateDto.getPlanType() != null) {
+                    monthPlan.setPlanType(monthPlanUpdateDto.getPlanType());
+                }
+                if (monthPlanUpdateDto.getStart() != null) {
+                    monthPlan.setStart(monthPlanUpdateDto.getStart());
+                }
+                if (monthPlanUpdateDto.getEnd() != null) {
+                    monthPlan.setEnd(monthPlanUpdateDto.getEnd());
+                }
+
+
+                // Ensure the planId matches before saving changes
+                if (monthPlan.getPlanId() == monthPlanUpdateDto.getPlanId()) {
+                    monthPlanRepository.save(monthPlan);
+                    return true;
+                } else {
+                    return false; // Provided planId does not match the entity's planId
+                }
+            } else {
+                return false; // Plan with given ID not found
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Log or handle the exception
+            return false; // Update operation failed
+        }
     }
 }
