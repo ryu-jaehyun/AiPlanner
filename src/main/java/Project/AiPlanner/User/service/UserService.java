@@ -39,9 +39,7 @@ public class UserService {
     //signup()을 통해 가입한 회원은 USER ROLE을 가지고 있다.
     @Transactional
     public UserFormDto signup(UserFormDto userDto) {
-        if (userRepository.findOneWithAuthoritiesByUserName(userDto.getUserName()).orElse(null) != null) {
-            throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
-        }
+
 
         AuthorityEntity authority = AuthorityEntity.builder()
                 .authorityName("ROLE_USER")
