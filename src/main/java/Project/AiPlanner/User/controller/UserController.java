@@ -30,7 +30,7 @@ public class UserController {
     }
 
     //아이디 중복 검증
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/checkId")
     public ResponseEntity<String> checkId(@RequestBody Map<String,String> request){
         String userId = request.get("userId");
@@ -50,12 +50,12 @@ public class UserController {
     }
 
     //아이디찾기
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/findId")
     public ResponseEntity<String> findId(@RequestBody Map<String,String> request){
         String phoneNum = request.get("phoneNum");
         //아이디 빈값? -> 입력하라고 요청+400 error
-
+        log.info("phoneNum={}",phoneNum);
         String userId = userRepository.findUserIdByPhoneNum(phoneNum);
         if (userId != null) {
             String message = "찾으시는 id는 " + userId + " 값 입니다";
@@ -68,7 +68,7 @@ public class UserController {
         }
     }
     //비밀번호 찾기
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/findPw")
     public ResponseEntity<String> findPw( @Valid @RequestBody UserPwRequestDto userPwRequestDto) {
 
@@ -95,7 +95,7 @@ public class UserController {
 
     //회원가입
     @PostMapping("/register")
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> createUser( @Valid @RequestBody UserFormDto userFormDto) {
 
         String userId = userFormDto.getUserId();
