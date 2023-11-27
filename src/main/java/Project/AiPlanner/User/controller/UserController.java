@@ -1,6 +1,7 @@
 package Project.AiPlanner.User.controller;
 
 import Project.AiPlanner.User.Dto.UserFormDto;
+import Project.AiPlanner.User.Dto.UserPwRequestDto;
 import Project.AiPlanner.User.entity.UserEntity;
 import Project.AiPlanner.User.repository.UserRepository;
 import Project.AiPlanner.User.service.UserService;
@@ -48,6 +49,47 @@ public class UserController {
         }
     }
 
+    //아이디찾기
+    @CrossOrigin(origins = "*")
+    @PostMapping("/findId")
+    public ResponseEntity<String> findId(@RequestBody Map<String,String> request){
+        String phoneNum = request.get("phoneNum");
+        //아이디 빈값? -> 입력하라고 요청+400 error
+
+        String userId = userRepository.findUserIdByPhoneNum(phoneNum);
+        if (userId != null) {
+            String message = "찾으시는 id는 " + userId + " 값 입니다";
+            return ResponseEntity.ok(message);
+        } else if (userId==null) {
+            return new ResponseEntity<>("핸드폰번호를 입력해주세요", HttpStatus.BAD_REQUEST);
+
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("일치하는 id가 없습니다.");
+        }
+    }
+    //비밀번호 찾기
+    @CrossOrigin(origins = "*")
+    @PostMapping("/findPw")
+    public ResponseEntity<String> findPw( @Valid @RequestBody UserPwRequestDto userPwRequestDto) {
+
+        String userPw = userService.getUserPassword(userPwRequestDto);
+        if (userPw != null) {
+            String message = "찾으시는 password는 " + userPw + " 값 입니다";
+            return ResponseEntity.ok(message);
+        }
+        else if (userPw==null) {
+            return new ResponseEntity<>("입력정보를 다시 입력해주세요", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("일치하는 password가 없습니다.");
+        }
+
+
+
+
+
+
+    }
 
 
 
@@ -56,7 +98,12 @@ public class UserController {
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> createUser( @Valid @RequestBody UserFormDto userFormDto) {
 
-         userService.signup(userFormDto);
+        String userId = userFormDto.getUserId();
+        boolean isUnique = userService.isUserIdUnique(userId);
+        if (!isUnique) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("중복된 아이디입니다. 아이디 중복확인을 눌러주세요");
+        }
+        userService.signup(userFormDto);
 
          return ResponseEntity.ok("회원가입이 완료되었습니다.");
         }

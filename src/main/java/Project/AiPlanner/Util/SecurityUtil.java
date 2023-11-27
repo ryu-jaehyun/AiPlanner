@@ -1,7 +1,9 @@
 package Project.AiPlanner.Util;
 
+import Project.AiPlanner.User.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,9 @@ import java.util.Optional;
 public class SecurityUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
+
+    @Autowired
+    private static UserRepository userRepository;
 
     private SecurityUtil() {}
 
@@ -38,6 +43,7 @@ public class SecurityUtil {
         if (authentication == null || authentication.getName() == null) {
             throw new RuntimeException("No authentication information.");
         }
-        return authentication.getName(); //여기서 발전해야될점 --> userId를 조회못하나? username밖에 못하나?
+        String username = authentication.getName();
+        return username;
     }
 }

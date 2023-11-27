@@ -1,6 +1,7 @@
 package Project.AiPlanner.User.service;
 
 import Project.AiPlanner.User.Dto.UserFormDto;
+import Project.AiPlanner.User.Dto.UserPwRequestDto;
 import Project.AiPlanner.User.entity.AuthorityEntity;
 import Project.AiPlanner.User.entity.UserEntity;
 import Project.AiPlanner.User.repository.UserRepository;
@@ -81,5 +82,16 @@ public class UserService {
         // 결과 리스트가 비어있으면 중복되지 않은 아이디
         // 결과 리스트에 사용자가 포함되어 있다면 중복 아이디
         return existingUsers.isEmpty();
+    }
+    public String getUserPassword(UserPwRequestDto userRequestDTO) {
+        // UserRequestDTO로부터 userId와 phoneNum을 가져와서 UserRepository를 통해 userPw 조회
+        Optional<String> userPwOptional = userRepository.findUserPasswordByUserIdAndPhoneNum(
+                userRequestDTO.getUserId(), userRequestDTO.getPhoneNum());
+
+        if (userPwOptional.isPresent()) {
+            return userPwOptional.get();
+        } else {
+            throw new RuntimeException("User password not found for the given userId and phoneNum.");
+        }
     }
 }

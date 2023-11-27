@@ -40,11 +40,11 @@ public class dayPlanController {
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Object> createDayPlan(@Valid @RequestBody DayPlanDto dayPlanDto) {
 
-        String currentUserName = SecurityUtil.getCurrentUserId();
+        String userId = SecurityUtil.getCurrentUserId();
 
-        log.info("사용자이름 ={}",currentUserName);
+        log.info("사용자아이디 ={}",userId);
 
-        String userId = userService.findByUserName(currentUserName);
+
 
 
         if (dayPlanService.
@@ -63,13 +63,11 @@ public class dayPlanController {
     public ResponseEntity<Object> deleteDayPlan(@Valid @RequestBody DayPlanDeleteDto dayPlanDeleteDto) {
 
 
-        String currentUserName = SecurityUtil.getCurrentUserId();
+        String userId = SecurityUtil.getCurrentUserId();
 
-
-
-        String userId = userService.findByUserName(currentUserName);
+        log.info("사용자아이디 ={}",userId);
         Integer planId = dayPlanDeleteDto.getPlanId();
-        log.info("userid={}", userId);
+
         log.info("planid ={}", planId);
 
         if(dayPlanService.deleteDayPlan(planId, userId)){
@@ -83,11 +81,9 @@ public class dayPlanController {
     @PatchMapping("/update")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Object> updateDayPlan(@Valid @RequestBody DayPlanUpdateDto dayPlanUpdateDto){
-        String currentUserName = SecurityUtil.getCurrentUserId();
+        String userId = SecurityUtil.getCurrentUserId();
 
-
-
-        String userId = userService.findByUserName(currentUserName);
+        log.info("사용자아이디 ={}",userId);
         Integer planId = dayPlanUpdateDto.getPlanId();
         if(dayPlanService.updateDayPlan(planId, userId,dayPlanUpdateDto)){
             List<DayPlanEntity> dayPlanEntities = dayPlanRepository.findByUserId(userId);

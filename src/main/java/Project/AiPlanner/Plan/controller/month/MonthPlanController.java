@@ -41,11 +41,9 @@ public class MonthPlanController {
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Object> createMonthPlan(@Valid @RequestBody MonthPlanDto monthPlanDto) {
 
-        String currentUserName = SecurityUtil.getCurrentUserId();
+        String userId = SecurityUtil.getCurrentUserId();
 
-        log.info("사용자이름 ={}",currentUserName);
-
-        String userId = userService.findByUserName(currentUserName);
+        log.info("사용자아이디 ={}",userId);
 
 
         if (monthPlanService.saveMonthPlan(monthPlanDto, userId)) {
@@ -62,13 +60,11 @@ public class MonthPlanController {
     public ResponseEntity<Object> deleteMonthPlan(@Valid @RequestBody MonthPlanDeleteDto monthPlanDeleteDto) {
 
 
-        String currentUserName = SecurityUtil.getCurrentUserId();
+        String userId = SecurityUtil.getCurrentUserId();
 
-
-
-        String userId = userService.findByUserName(currentUserName);
+        log.info("사용자아이디 ={}",userId);
         Integer planId = monthPlanDeleteDto.getPlanId();
-        log.info("userid={}", userId);
+
         log.info("planid ={}", planId);
 
         if(monthPlanService.deleteMonthPlan(planId, userId)){
@@ -82,11 +78,9 @@ public class MonthPlanController {
     @PatchMapping("/update")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Object> updateMonthPlan(@RequestBody MonthPlanUpdateDto monthPlanUpdateDto){
-        String currentUserName = SecurityUtil.getCurrentUserId();
+        String userId = SecurityUtil.getCurrentUserId();
 
-
-
-        String userId = userService.findByUserName(currentUserName);
+        log.info("사용자아이디 ={}",userId);
         Integer planId = monthPlanUpdateDto.getPlanId();
         if(monthPlanService.updateMonthPlan(planId, userId,monthPlanUpdateDto)){
             List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);

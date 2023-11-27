@@ -32,9 +32,9 @@ public class AuthController {
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
 
 
-        log.info("loginDto= {},{}",loginDto.getUserName(),loginDto.getUserPw());
+        log.info("loginDto= {},{}",loginDto.getUserId(),loginDto.getUserPw());
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUserName(), loginDto.getUserPw());
+                new UsernamePasswordAuthenticationToken(loginDto.getUserId(), loginDto.getUserPw());
         
         log.info("authenticatontoken={}",authenticationToken);
 

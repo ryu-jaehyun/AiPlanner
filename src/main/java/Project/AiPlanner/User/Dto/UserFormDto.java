@@ -2,6 +2,7 @@ package Project.AiPlanner.User.Dto;
 
 import Project.AiPlanner.User.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -18,14 +19,16 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserFormDto {
 
-    @NotNull(message = "아이디는 필수 값입니다.") //빈칸과 null 허용x
+    @NotNull(message = "이름은 필수 값입니다.") //빈칸과 null 허용x
     @Length
+    //@JsonProperty("userName")
     private String userId;
 
     @NotNull(message = "비밀번호는 필수 값입니다.")
     private String userPw;
 
-    @NotNull(message = "이름은 필수 값입니다.")
+    @NotNull(message = "아이디는 필수 값입니다.")
+    //@JsonProperty("userId")
     private String userName;
 
 
