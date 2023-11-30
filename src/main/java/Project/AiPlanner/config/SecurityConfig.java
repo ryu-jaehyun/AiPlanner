@@ -69,7 +69,7 @@ public class SecurityConfig  {
                 )
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/user/checkId", "/user/login","/user/register").permitAll()
+                        .requestMatchers("/user/checkId","/alarm","/kakao", "/user/login","/user/register","/user/findId","/user/findPw").permitAll()
                         .anyRequest().authenticated()
                 )
 
