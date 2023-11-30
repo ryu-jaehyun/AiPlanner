@@ -78,19 +78,15 @@ public class UserController {
     @PostMapping("/findPw")
     public ResponseEntity<String> findPw( @Valid @RequestBody UserPwRequestDto userPwRequestDto) {
 
-        Optional<UserEntity> userOptional = Optional.ofNullable(userService.getUserPassword(userPwRequestDto));
-        if (userOptional.isPresent()) {
+        String newPw = userService.updateAndReturnTempPassword(userPwRequestDto.getUserId(), userPwRequestDto.getPhoneNum());
+        if (newPw!=null) {
 
-            UserEntity userEntity = userOptional.get();
-            String userPw = userEntity.getUserPw();
-            String message = "찾으시는 password는 " + userPw + "값 입니다";
+
+            String message = "임시비밀번호는 " + newPw + "입니다";
             return ResponseEntity.ok(message);
         }
-        else if (userPwRequestDto.getUserId()==null||userPwRequestDto.getPhoneNum()==null) {
+        else  {
             return new ResponseEntity<>("입력정보를 다시 입력해주세요", HttpStatus.BAD_REQUEST);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("일치하는 password가 없습니다.");
         }
 
 

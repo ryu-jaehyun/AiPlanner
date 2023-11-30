@@ -80,15 +80,37 @@ public class UserService {
         // 결과 리스트에 사용자가 포함되어 있다면 중복 아이디
         return existingUsers.isEmpty();
     }
-    public UserEntity getUserPassword(UserPwRequestDto userRequestDTO) {
-        // UserRequestDTO로부터 userId와 phoneNum을 가져와서 UserRepository를 통해 userPw 조회
-        Optional<UserEntity> userPwOptional = userRepository.findUserPasswordByUserIdAndPhoneNum(
-                userRequestDTO.getUserId(), userRequestDTO.getPhoneNum());
+    public String updateAndReturnTempPassword(String userId, String phoneNum) {
+        // 임시 비밀번호 생성 (랜덤한 문자열)
+        String tempPassword = generateRandomPassword(10);
 
-        if (userPwOptional.isPresent()) {
-            return userPwOptional.get();
+        // 임시 비밀번호를 DB에 업데이트
+        Optional<UserEntity> userOptional = userRepository.findUserByUserIdAndPhoneNum(userId, phoneNum);
+        if (userOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+
+            // 비밀번호 업데이트
+            user.setUserPw(passwordEncoder.encode(tempPassword));
+            userRepository.save(user);
+
+            // 임시 비밀번호 반환
+            return tempPassword;
         } else {
-            throw new RuntimeException("User password not found for the given userId and phoneNum.");
+            throw new RuntimeException("User not found for the given userId and phoneNum.");
         }
     }
+
+    private String generateRandomPassword(int length) {
+        // 임시 비밀번호를 랜덤하게 생성하는 코드 (예: 알파벳 대소문자, 숫자 조합)
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            int index = (int) (Math.random() * characters.length());
+            password.append(characters.charAt(index));
+        }
+
+        return password.toString();
+    }
 }
+
