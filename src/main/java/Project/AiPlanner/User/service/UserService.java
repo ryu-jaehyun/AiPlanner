@@ -6,12 +6,9 @@ import Project.AiPlanner.User.entity.AuthorityEntity;
 import Project.AiPlanner.User.entity.UserEntity;
 import Project.AiPlanner.User.repository.UserRepository;
 import Project.AiPlanner.Util.SecurityUtil;
-import Project.AiPlanner.exception.DuplicateMemberException;
 import Project.AiPlanner.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,9 +80,9 @@ public class UserService {
         // 결과 리스트에 사용자가 포함되어 있다면 중복 아이디
         return existingUsers.isEmpty();
     }
-    public String getUserPassword(UserPwRequestDto userRequestDTO) {
+    public UserEntity getUserPassword(UserPwRequestDto userRequestDTO) {
         // UserRequestDTO로부터 userId와 phoneNum을 가져와서 UserRepository를 통해 userPw 조회
-        Optional<String> userPwOptional = userRepository.findUserPasswordByUserIdAndPhoneNum(
+        Optional<UserEntity> userPwOptional = userRepository.findUserPasswordByUserIdAndPhoneNum(
                 userRequestDTO.getUserId(), userRequestDTO.getPhoneNum());
 
         if (userPwOptional.isPresent()) {

@@ -14,6 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
+
 @Slf4j
 @RestController
 @RequestMapping("/user")
@@ -56,12 +58,16 @@ public class UserController {
         String phoneNum = request.get("phoneNum");
         //아이디 빈값? -> 입력하라고 요청+400 error
         log.info("phoneNum={}",phoneNum);
-        String userId = userRepository.findUserIdByPhoneNum(phoneNum);
-        if (userId != null) {
-            String message = "찾으시는 id는 " + userId + " 값 입니다";
+        Optional<UserEntity> userOptional = userRepository.findUserIdByPhoneNum(phoneNum);
+        if (userOptional.isPresent()) {
+            UserEntity userEntity = userOptional.get();
+            String userId = userEntity.getUserId();
+            // 여기서 userId 사용
+            String message = "찾으시는 id는 " + userId + "입니다";
             return ResponseEntity.ok(message);
-        } else if (userId==null) {
-            return new ResponseEntity<>("핸드폰번호를 입력해주세요", HttpStatus.BAD_REQUEST);
+        }
+        else if (phoneNum==null) {
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("전화번호를 다시입력해주세요");
 
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("일치하는 id가 없습니다.");
@@ -72,12 +78,15 @@ public class UserController {
     @PostMapping("/findPw")
     public ResponseEntity<String> findPw( @Valid @RequestBody UserPwRequestDto userPwRequestDto) {
 
-        String userPw = userService.getUserPassword(userPwRequestDto);
-        if (userPw != null) {
-            String message = "찾으시는 password는 " + userPw + " 값 입니다";
+        Optional<UserEntity> userOptional = Optional.ofNullable(userService.getUserPassword(userPwRequestDto));
+        if (userOptional.isPresent()) {
+
+            UserEntity userEntity = userOptional.get();
+            String userPw = userEntity.getUserPw();
+            String message = "찾으시는 password는 " + userPw + "값 입니다";
             return ResponseEntity.ok(message);
         }
-        else if (userPw==null) {
+        else if (userPwRequestDto.getUserId()==null||userPwRequestDto.getPhoneNum()==null) {
             return new ResponseEntity<>("입력정보를 다시 입력해주세요", HttpStatus.BAD_REQUEST);
         }
         else {

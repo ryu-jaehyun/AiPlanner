@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
 
     Optional<UserEntity> findOneWithAuthoritiesByUserId(String userId);
 
-    String findUserIdByPhoneNum(String phoneNum);
+    Optional<UserEntity> findUserIdByPhoneNum(String phoneNum);
 
-    Optional<String> findUserPasswordByUserIdAndPhoneNum(String userId, String phoneNum);
+    Optional<UserEntity> findUserPasswordByUserIdAndPhoneNum(String userId, String phoneNum);
 }
