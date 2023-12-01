@@ -57,7 +57,7 @@ public class SecurityConfig  {
                         .configurationSource(request -> {
                             CorsConfiguration config = new CorsConfiguration();
                             config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-                            config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+                            config.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
                             config.setAllowedHeaders(Collections.singletonList("*"));
                             return config;
                         })

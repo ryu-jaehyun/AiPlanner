@@ -12,6 +12,7 @@ import Project.AiPlanner.Plan.service.month.MonthPlanService;
 import Project.AiPlanner.User.service.UserService;
 import Project.AiPlanner.Util.SecurityUtil;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/plan/day")
 public class dayPlanController {
 
@@ -29,12 +31,6 @@ public class dayPlanController {
     private final DayPlanRepository dayPlanRepository;
     private final UserService userService;
 
-    @Autowired
-    public dayPlanController(DayPlanService dayPlanService, DayPlanRepository dayPlanRepository, UserService userService) {
-        this.dayPlanService = dayPlanService;
-        this.dayPlanRepository = dayPlanRepository;
-        this.userService = userService;
-    }
 
     @PostMapping("/add")
     @CrossOrigin(origins = "http://localhost:3000")

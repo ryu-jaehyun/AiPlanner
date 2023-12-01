@@ -6,6 +6,7 @@ import Project.AiPlanner.User.entity.UserEntity;
 import Project.AiPlanner.User.repository.UserRepository;
 import Project.AiPlanner.User.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
@@ -26,10 +28,6 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserRepository userRepository, UserService userService) {
-        this.userRepository = userRepository;
-        this.userService = userService;
-    }
 
     //아이디 중복 검증
     @CrossOrigin(origins = "http://localhost:3000")

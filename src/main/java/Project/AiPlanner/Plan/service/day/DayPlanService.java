@@ -1,9 +1,12 @@
 package Project.AiPlanner.Plan.service.day;
 
+import Project.AiPlanner.Plan.Dto.day.DaySuccessDto;
 import Project.AiPlanner.Plan.Dto.day.DayPlanDto;
 import Project.AiPlanner.Plan.Dto.day.DayPlanUpdateDto;
 import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
+import Project.AiPlanner.Plan.entity.month.MonthPlanEntity;
 import Project.AiPlanner.Plan.respository.day.DayPlanRepository;
+import Project.AiPlanner.Plan.respository.month.MonthPlanRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -19,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DayPlanService {
     private final DayPlanRepository dayPlanRepository;
-
+    private final MonthPlanRepository monthPlanRepository;
     private final ModelMapper modelMapper;
 
 
@@ -112,6 +115,38 @@ public class DayPlanService {
             e.printStackTrace(); // Log or handle the exception
             return false; // Update operation failed
         }
+    }
+    @Transactional
+    public String updateSuccessAndGetAverage(DaySuccessDto daySuccessDto) {
+        String userId = daySuccessDto.getUserId();
+        Integer planId = daySuccessDto.getPlanId();
+        Integer success = daySuccessDto.getSuccess();
+
+        // 해당 userId와 planId에 해당하는 일정을 찾아 success 값을 업데이트
+        Optional<DayPlanEntity> dayPlanOptional = dayPlanRepository.findByPlanIdAndUserId(planId, userId);
+        dayPlanOptional.ifPresent(dayPlan -> {
+            dayPlan.setSuccess(success);
+            dayPlanRepository.save(dayPlan);
+        });
+        Optional<MonthPlanEntity> monthPlanOptional = monthPlanRepository.findByPlanIdAndUserId(planId, userId);
+        monthPlanOptional.ifPresent(monthPlan -> {
+            monthPlan.setSuccess(success);
+            monthPlanRepository.save(monthPlan);
+        });
+        // 전체 일정에 대한 success 평균 계산
+        double totalDayPlans = dayPlanRepository.countByUserId(userId);
+        double totalMonthPlans = monthPlanRepository.countByUserId(userId);
+        Optional<Integer> dayPlanSuccessSumOptional = Optional.ofNullable(dayPlanRepository.sumSuccessByUserId(userId));
+        Optional<Integer> monthPlanSuccessSumOptional = Optional.ofNullable(monthPlanRepository.sumSuccessByUserId(userId));
+
+        int dayPlanSuccessSum = dayPlanSuccessSumOptional.orElse(0);
+        int monthPlanSuccessSum = monthPlanSuccessSumOptional.orElse(0);
+
+        double averageSuccess = ((double) dayPlanSuccessSum + monthPlanSuccessSum) / (totalDayPlans + totalMonthPlans);
+        int roundedAverage = (int) Math.round(averageSuccess * 100); // 반올림 및 정수로 변환
+        String result = String.format("%d%%", roundedAverage); // 문자열로 변환하여 출력
+
+        return result;
     }
 }
 

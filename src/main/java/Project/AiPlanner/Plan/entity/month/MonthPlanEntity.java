@@ -34,5 +34,7 @@ public class MonthPlanEntity {
     @Column(name = "end",nullable = false)
     private LocalDateTime end;
 
+    @Column(name = "success", length = 1)
+    private Integer success =0;
     // 나머지 필드 및 메소드 추가
 }
