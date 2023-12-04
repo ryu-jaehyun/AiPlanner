@@ -3,6 +3,7 @@ package Project.AiPlanner.Plan.Dto.month;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -15,7 +16,7 @@ public class MonthPlanUpdateDto {
     private int planId;
     private String planName;
     private String planType;
-    private LocalDateTime start;
-    private LocalDateTime end;
-
+    private LocalDate start;
+    private LocalDate end;
+    private String color;
 }

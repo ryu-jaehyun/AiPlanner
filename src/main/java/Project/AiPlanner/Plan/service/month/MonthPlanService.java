@@ -3,9 +3,11 @@ package Project.AiPlanner.Plan.service.month;
 
 import Project.AiPlanner.Plan.Dto.day.DayPlanUpdateDto;
 import Project.AiPlanner.Plan.Dto.day.DaySuccessDto;
+import Project.AiPlanner.Plan.Dto.day.DayTypeColorDto;
 import Project.AiPlanner.Plan.Dto.month.MonthPlanDto;
 import Project.AiPlanner.Plan.Dto.month.MonthPlanUpdateDto;
 import Project.AiPlanner.Plan.Dto.month.MonthSuccessDto;
+import Project.AiPlanner.Plan.Dto.month.MonthTypeColorDto;
 import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
 import Project.AiPlanner.Plan.entity.month.MonthPlanEntity;
 import Project.AiPlanner.Plan.respository.day.DayPlanRepository;
@@ -16,8 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -142,6 +143,36 @@ public class MonthPlanService {
         double averageSuccess = ((double) dayPlanSuccessSum + monthPlanSuccessSum) / (totalDayPlans + totalMonthPlans);
         int roundedAverage = (int) Math.round(averageSuccess * 100); // 반올림 및 정수로 변환
         String result = String.format("%d%%", roundedAverage); // 문자열로 변환하여 출력
+
+        return result;
+    }
+    public List<MonthTypeColorDto> getUniquePlanTypesAndColors(String userId) {
+        List<MonthPlanEntity> userPlans = monthPlanRepository.findByUserId(userId);
+        Map<String, String> typeColorMap = new HashMap<>();
+
+        for (MonthPlanEntity plan : userPlans) {
+            String planType = plan.getPlanType();
+            String color = plan.getColor();
+
+            // 중복되지 않는 planType과 color를 Map에 추가
+            if (!typeColorMap.containsKey(planType)) {
+                typeColorMap.put(planType, color);
+            }
+        }
+
+        // MonthTypeColorDto 리스트 생성
+        List<MonthTypeColorDto> result = new ArrayList<>();
+        for (Map.Entry<String, String> entry : typeColorMap.entrySet()) {
+            String planType = entry.getKey();
+            String color = entry.getValue();
+
+            // MonthTypeColorDto planType과 color를 설정하여 리스트에 추가
+            MonthTypeColorDto dto = new MonthTypeColorDto();
+            dto.setPlanType(planType);
+            dto.setColor(color);
+
+            result.add(dto);
+        }
 
         return result;
     }

@@ -15,5 +15,6 @@ public class DaySuccessDto {
     private LocalDateTime start;
     private LocalDateTime end;
     private String plan;
+    private String color;
     private int success;
 }

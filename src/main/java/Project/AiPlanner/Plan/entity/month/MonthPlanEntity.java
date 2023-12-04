@@ -3,6 +3,7 @@ package Project.AiPlanner.Plan.entity.month;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,12 +30,17 @@ public class MonthPlanEntity {
     private String planType;
 
     @Column(name = "start",nullable = false)
-    private LocalDateTime start;
+    private LocalDate start;
 
     @Column(name = "end",nullable = false)
-    private LocalDateTime end;
+    private LocalDate end;
 
-    @Column(name = "success", length = 1)
-    private Integer success =0;
+
+    @Column(name="color" ,nullable = false ,length = 30)
+    private String color;
+
+    @Column(name = "success",nullable = false)
+    private int success=0 ;
     // 나머지 필드 및 메소드 추가
+
 }

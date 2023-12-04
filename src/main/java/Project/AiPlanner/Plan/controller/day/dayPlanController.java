@@ -4,6 +4,7 @@ package Project.AiPlanner.Plan.controller.day;
 import Project.AiPlanner.Plan.Dto.day.DayPlanDeleteDto;
 import Project.AiPlanner.Plan.Dto.day.DayPlanDto;
 import Project.AiPlanner.Plan.Dto.day.DayPlanUpdateDto;
+import Project.AiPlanner.Plan.Dto.day.DayTypeColorDto;
 import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
 import Project.AiPlanner.Plan.respository.day.DayPlanRepository;
 import Project.AiPlanner.Plan.respository.month.MonthPlanRepository;
@@ -94,5 +95,18 @@ public class dayPlanController {
 
 
     }
+    @GetMapping("/type")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Object> getUniquePlanTypesAndColors(){
+        String userId = SecurityUtil.getCurrentUserId();
 
-}
+        log.info("사용자아이디 ={}",userId);
+        List<DayTypeColorDto> uniqueTypesColors = dayPlanService.getUniquePlanTypesAndColors(userId);
+        if(uniqueTypesColors == null){
+            return new ResponseEntity<>("일정타입을 등록해주세요",HttpStatus.OK);
+        }
+        return ResponseEntity.ok(uniqueTypesColors);
+    }
+
+    }
+

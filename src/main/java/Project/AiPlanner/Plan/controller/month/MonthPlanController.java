@@ -3,9 +3,11 @@ package Project.AiPlanner.Plan.controller.month;
 
 import Project.AiPlanner.Plan.Dto.day.DayPlanDeleteDto;
 import Project.AiPlanner.Plan.Dto.day.DayPlanUpdateDto;
+import Project.AiPlanner.Plan.Dto.day.DayTypeColorDto;
 import Project.AiPlanner.Plan.Dto.month.MonthPlanDeleteDto;
 import Project.AiPlanner.Plan.Dto.month.MonthPlanDto;
 import Project.AiPlanner.Plan.Dto.month.MonthPlanUpdateDto;
+import Project.AiPlanner.Plan.Dto.month.MonthTypeColorDto;
 import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
 import Project.AiPlanner.Plan.entity.month.MonthPlanEntity;
 import Project.AiPlanner.Plan.respository.month.MonthPlanRepository;
@@ -90,6 +92,18 @@ public class MonthPlanController {
 
 
 
+    }
+    @GetMapping("/type")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Object> getUniquePlanTypesAndColors(){
+        String userId = SecurityUtil.getCurrentUserId();
+
+        log.info("사용자아이디 ={}",userId);
+        List<MonthTypeColorDto> uniqueTypesColors = monthPlanService.getUniquePlanTypesAndColors(userId);
+        if(uniqueTypesColors == null){
+            return new ResponseEntity<>("일정타입을 등록해주세요",HttpStatus.OK);
+        }
+        return ResponseEntity.ok(uniqueTypesColors);
     }
 
 }

@@ -36,9 +36,12 @@ public class DayPlanEntity {
 
     @Column(name = "plan",nullable = false, length = 10)
     private String plan;
+
+    @Column(name="color" ,nullable = false ,length = 30)
+    private String color;
     // 나머지 필드 및 메소드 추가
     @Column(name = "success",nullable = false)
-    private Integer success =0;
+    private int success =0;
 }
 
 
