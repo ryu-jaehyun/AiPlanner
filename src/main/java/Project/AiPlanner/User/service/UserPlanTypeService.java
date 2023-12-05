@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,8 @@ public class UserPlanTypeService {
 
         userPlanTypeRepository.save(userPlanType);
     }
+
+    @Transactional
     public List<UserPlanTypeColorDto> getUserPlanTypesByUserId(String userId) {
         List<UserPlanTypeEntity> userPlanTypeEntities = userPlanTypeRepository.findByUserId(userId);
         return userPlanTypeEntities.stream()
@@ -36,10 +39,23 @@ public class UserPlanTypeService {
                 .collect(Collectors.toList());
     }
 
-    private UserPlanTypeColorDto convertToDTO(UserPlanTypeEntity entity) {
+    public UserPlanTypeColorDto convertToDTO(UserPlanTypeEntity entity) {
         UserPlanTypeColorDto dto = new UserPlanTypeColorDto();
         dto.setColor(entity.getColor());
         dto.setPlanType(entity.getPlanType());
         return dto;
+    }
+
+    @Transactional
+    public void addDefaultPlanTypeAndColor(String userId) {
+        List<UserPlanTypeEntity> existingDefaults = userPlanTypeRepository.findByUserId(userId);
+        if (existingDefaults.isEmpty()) {
+            List<UserPlanTypeEntity> defaultPlanTypeColors = new ArrayList<>();
+            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#DC8686", "여가시간"));
+            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#9ADE7B", "자기계발"));
+            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#6DB9EF", "중요일정"));
+
+            userPlanTypeRepository.saveAll(defaultPlanTypeColors);
+        }
     }
 }

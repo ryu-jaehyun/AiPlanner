@@ -31,8 +31,9 @@ public class UserPlanTypeEntity {
     private String planType;
 
 
-
-
-
-
+    public UserPlanTypeEntity(String userId, String color, String planType) {
+        this.color = color;
+        this.planType = planType;
+        this.userId = userId;
+    }
 }

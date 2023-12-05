@@ -34,6 +34,7 @@ public class UserPlanContoller {
     @GetMapping("/get")
     public ResponseEntity<List<UserPlanTypeColorDto>> getUserPlanTypes() {
         String userId = SecurityUtil.getCurrentUserId();
+        userPlanTypeService.addDefaultPlanTypeAndColor(userId);
         List<UserPlanTypeColorDto> userPlanTypes = userPlanTypeService.getUserPlanTypesByUserId(userId);
         return ResponseEntity.ok(userPlanTypes);
     }
