@@ -53,7 +53,7 @@ public class MonthPlanController {
 
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> deleteMonthPlan(@Valid @RequestBody MonthPlanDeleteDto monthPlanDeleteDto) {
 

@@ -56,7 +56,7 @@ public class dayPlanController {
 
 
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> deleteDayPlan(@Valid @RequestBody DayPlanDeleteDto dayPlanDeleteDto) {
 
