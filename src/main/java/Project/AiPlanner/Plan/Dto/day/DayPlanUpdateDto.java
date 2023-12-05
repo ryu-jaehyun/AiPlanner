@@ -20,4 +20,5 @@ public class DayPlanUpdateDto {
     private LocalDateTime end;
     private String plan;
     private String color;
+    private int success;
 }

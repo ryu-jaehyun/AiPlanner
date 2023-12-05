@@ -19,4 +19,5 @@ public class MonthPlanUpdateDto {
     private LocalDate start;
     private LocalDate end;
     private String color;
+    private int success;
 }
