@@ -37,7 +37,7 @@ public class MonthPlanController {
 
     @PostMapping("/add")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Object> createMonthPlan(@Valid @RequestBody MonthPlanDto monthPlanDto) {
+    public ResponseEntity<String> createMonthPlan(@Valid @RequestBody MonthPlanDto monthPlanDto) {
 
         String userId = SecurityUtil.getCurrentUserId();
 
@@ -45,17 +45,17 @@ public class MonthPlanController {
 
 
         if (monthPlanService.saveMonthPlan(monthPlanDto, userId)) {
-            List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);
-            return ResponseEntity.ok(monthPlanEntities);} // Returning entities directly
+           // List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);
+            return new ResponseEntity<>("월별일정 등록 성공!", HttpStatus.OK);}
         else
             return new ResponseEntity<>("요청이 잘못되었습니다. 다시 일정을 확인해주세요", HttpStatus.BAD_REQUEST);
 
 
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Object> deleteMonthPlan(@Valid @RequestBody MonthPlanDeleteDto monthPlanDeleteDto) {
+    public ResponseEntity<String> deleteMonthPlan(@Valid @RequestBody MonthPlanDeleteDto monthPlanDeleteDto) {
 
 
         String userId = SecurityUtil.getCurrentUserId();
@@ -66,24 +66,23 @@ public class MonthPlanController {
         log.info("planid ={}", planId);
 
         if(monthPlanService.deleteMonthPlan(planId, userId)){
-            List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);
-            return ResponseEntity.ok(monthPlanEntities); // Returning entities directly
-        }
+
+            return new ResponseEntity<>("월별일정 삭제 성공!", HttpStatus.OK);}
+
         else {
             return new ResponseEntity<>("요청이 잘못되었습니다. 삭제할 일정을 다시 확인해주세요", HttpStatus.BAD_REQUEST);
         }
     }
     @PatchMapping("/update")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Object> updateMonthPlan(@RequestBody MonthPlanUpdateDto monthPlanUpdateDto){
+    public ResponseEntity<String> updateMonthPlan(@RequestBody MonthPlanUpdateDto monthPlanUpdateDto){
         String userId = SecurityUtil.getCurrentUserId();
 
         log.info("사용자아이디 ={}",userId);
         Integer planId = monthPlanUpdateDto.getPlanId();
         if(monthPlanService.updateMonthPlan(planId, userId,monthPlanUpdateDto)){
-            List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);
-            return ResponseEntity.ok(monthPlanEntities); // Returning entities directly
-        }
+
+            return new ResponseEntity<>("월별일정 수정 성공!", HttpStatus.OK);}
         else {
             return new ResponseEntity<>("요청이 잘못되었습니다. 삭제할 일정을 다시 확인해주세요", HttpStatus.BAD_REQUEST);
         }
@@ -93,8 +92,16 @@ public class MonthPlanController {
 
 
     }
-    @GetMapping("/type")
+    @GetMapping("/get")
     @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Object> getMonthPlan(){
+        String userId = SecurityUtil.getCurrentUserId();
+        List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);
+        return ResponseEntity.ok(monthPlanEntities);
+    }
+
+    //@GetMapping("/type")
+    //@CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Object> getUniquePlanTypesAndColors(){
         String userId = SecurityUtil.getCurrentUserId();
 

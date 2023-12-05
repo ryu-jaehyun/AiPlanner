@@ -37,5 +37,5 @@ public class DayPlanDto {
     @NotNull(message  = "일정구분 색값은 필수값 입니다.")
     private String color;
 
-
+    private Integer success;
 }
