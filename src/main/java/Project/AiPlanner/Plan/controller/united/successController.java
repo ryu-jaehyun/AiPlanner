@@ -31,10 +31,23 @@ public class successController {
         log.info("사용자아이디 ={}",userId);
 
         String result = dayPlanService.updateSuccessAndGetAverage(daySuccessDto);
-        return ResponseEntity.ok(userName + "의 달성률 : " +result);
+        String message;
 
+        // 결과에 따라 다른 메시지 생성
+        double resultValue = Double.parseDouble(result.replaceAll("[^0-9.]", ""));
+        if (resultValue < 50) {
+            message = "달성률 저조, 분발하세요!";
+        } else if (resultValue < 80) {
+            message = "달성률 좋음. 조금만 더 화이팅!";
+        } else {
+            message = "달성률최고! 꾸준히 유지하세요!";
+        }
 
+        return ResponseEntity.ok(userName + "의 달성률 : " + result + ". " + message);
     }
+
+
+
 
     @PatchMapping("/month")
     @CrossOrigin(origins = "http://localhost:3000")
@@ -44,8 +57,18 @@ public class successController {
         log.info("사용자아이디 ={}",userId);
 
         String result = monthPlanService.updateSuccessAndGetAverage(monthSuccessDto);
-        return ResponseEntity.ok(userName + "의 달성률 : " +result);
+        String message;
 
+        // 결과에 따라 다른 메시지 생성
+        double resultValue = Double.parseDouble(result.replaceAll("[^0-9.]", ""));
+        if (resultValue < 50) {
+            message = "달성률 저조, 분발하세요!";
+        } else if (resultValue < 80) {
+            message = "달성률 좋음. 조금만 더 화이팅!";
+        } else {
+            message = "달성률최고! 꾸준히 유지하세요!";
+        }
 
+        return ResponseEntity.ok(userName + "의 달성률 : " + result + ". " + message);
     }
 }

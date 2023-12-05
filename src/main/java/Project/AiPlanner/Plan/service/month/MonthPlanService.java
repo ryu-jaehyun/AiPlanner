@@ -40,6 +40,7 @@ public class MonthPlanService {
                     .planType(monthPlanDto.getPlanType())
                     .start(monthPlanDto.getStart())
                     .end(monthPlanDto.getEnd())
+                    .color(monthPlanDto.getColor())
                     .build();
 
             MonthPlanEntity savedEntity = monthPlanRepository.save(monthPlanEntity);

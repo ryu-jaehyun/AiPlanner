@@ -36,6 +36,7 @@ public class DayPlanService {
                     .start(dayPlanDto.getStart())
                     .end(dayPlanDto.getEnd())
                     .plan(dayPlanDto.getPlan())
+                    .color(dayPlanDto.getColor())
                     .build();
 
             DayPlanEntity savedEntity = dayPlanRepository.save(dayPlanEntity);
