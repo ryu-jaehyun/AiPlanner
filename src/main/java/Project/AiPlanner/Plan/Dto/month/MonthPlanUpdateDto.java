@@ -20,5 +20,5 @@ public class MonthPlanUpdateDto {
     private LocalDate end;
     private String color;
     private int success;
-    private String dayOfWeek;
+
 }
