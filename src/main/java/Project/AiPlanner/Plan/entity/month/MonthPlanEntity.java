@@ -35,8 +35,7 @@ public class MonthPlanEntity {
     @Column(name = "end",nullable = false)
     private LocalDate end;
 
-    @Column(name="day_of_week",nullable = true,length = 20)
-    private String dayOfWeek;
+
 
     @Column(name="color" ,nullable = false ,length = 30)
     private String color;
