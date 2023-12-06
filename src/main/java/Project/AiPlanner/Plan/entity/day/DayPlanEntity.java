@@ -37,6 +37,9 @@ public class DayPlanEntity {
     @Column(name = "plan",nullable = false, length = 10)
     private String plan;
 
+    @Column(name="day_of_week",nullable = true,length = 20)
+    private String dayOfWeek;
+
     @Column(name="color" ,nullable = false ,length = 30)
     private String color;
     // 나머지 필드 및 메소드 추가

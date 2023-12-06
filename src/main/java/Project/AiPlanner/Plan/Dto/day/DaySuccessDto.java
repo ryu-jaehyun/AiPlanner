@@ -17,4 +17,5 @@ public class DaySuccessDto {
     private String plan;
     private String color;
     private int success;
+    private String dayOfWeek;
 }

@@ -1,6 +1,7 @@
 package Project.AiPlanner.Plan.Dto.day;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -38,4 +39,6 @@ public class DayPlanDto {
     private String color;
 
     private Integer success;
+
+    private String dayOfWeek;
 }

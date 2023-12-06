@@ -21,4 +21,5 @@ public class DayPlanUpdateDto {
     private String plan;
     private String color;
     private int success;
+    private String dayOfWeek;
 }

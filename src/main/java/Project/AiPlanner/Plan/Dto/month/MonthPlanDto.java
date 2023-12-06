@@ -37,6 +37,6 @@ public class MonthPlanDto {
     private String color;
 
     private Integer success;
-
+    private String dayOfWeek;
 
 }

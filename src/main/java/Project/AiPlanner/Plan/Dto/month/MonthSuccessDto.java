@@ -17,5 +17,6 @@ public class MonthSuccessDto {
 
     private int success;
     private String color;
+    private String dayOfWeek;
 }
 
