@@ -46,22 +46,37 @@ public class dayPlanController {
 
 
         boolean allSaved = true;
-        for (DayPlanDto dayPlanDto : dayPlanDtoList) {
-            LocalDateTime newStart = dayPlanDto.getStart();
-            LocalDateTime newEnd = dayPlanDto.getEnd();
 
-            // Query to find overlapping plans in the database with "plan" column as "고정"
-            List<DayPlanEntity> overlappingPlans = dayPlanRepository.findOverlappingFixedPlans(userId, newStart, newEnd);
+        // Fetch existing fixed day plans for the user
+        List<DayPlanEntity> existingFixedDayPlans = dayPlanRepository.findFixedPlansByUserId(userId);
 
-            // Delete overlapping plans from the database with "plan" column as "고정"
-            for (DayPlanEntity overlappingPlan : overlappingPlans) {
-                if (overlappingPlan.getPlan().equals("고정")) {
-                    dayPlanRepository.delete(overlappingPlan);
+        // Loop through new plans and check for overlapping time ranges with existing fixed plans
+        for (DayPlanDto newPlan : dayPlanDtoList) {
+            LocalDateTime newStart = newPlan.getStart();
+            LocalDateTime newEnd = newPlan.getEnd();
+
+            boolean overlapWithFixedPlan = false;
+
+            for (DayPlanEntity existingFixedPlan : existingFixedDayPlans) {
+                if (existingFixedPlan.getPlan().equals("고정")) {
+                    LocalDateTime existingFixedStart = existingFixedPlan.getStart();
+                    LocalDateTime existingFixedEnd = existingFixedPlan.getEnd();
+
+                    // Check for overlapping time ranges with existing fixed plans
+                    if (newStart.isBefore(existingFixedEnd) && newEnd.isAfter(existingFixedStart)) {
+                        overlapWithFixedPlan = true;
+                        break;
+                    }
                 }
             }
 
+            // If overlap with fixed plan found, skip saving this plan
+            if (overlapWithFixedPlan) {
+                continue;
+            }
+
             // Save the new plan
-            if (!dayPlanService.savePlan(dayPlanDto, userId)) {
+            if (!dayPlanService.savePlan(newPlan, userId)) {
                 allSaved = false;
                 break;
             }

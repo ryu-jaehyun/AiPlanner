@@ -32,4 +32,6 @@ public interface DayPlanRepository extends CrudRepository<DayPlanEntity, Integer
             @Param("newStart") LocalDateTime newStart,
             @Param("newEnd") LocalDateTime newEnd
     );
+    @Query("SELECT dp FROM DayPlanEntity dp WHERE dp.userId = :userId AND dp.plan = '고정'")
+    List<DayPlanEntity> findFixedPlansByUserId(String userId);
 }
