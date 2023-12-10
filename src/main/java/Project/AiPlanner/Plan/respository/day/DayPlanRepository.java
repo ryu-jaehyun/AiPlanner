@@ -26,7 +26,7 @@ public interface DayPlanRepository extends CrudRepository<DayPlanEntity, Integer
     @Query("SELECT dp FROM DayPlanEntity dp " +
             "WHERE dp.userId = :userId " +
             "AND dp.plan = '고정' " +
-            "AND (:newStart < dp.endTime AND :newEnd > dp.startTime)")
+            "AND (:newStart < dp.end AND :newEnd > dp.start)")
     List<DayPlanEntity> findOverlappingFixedPlans(
             @Param("userId") String userId,
             @Param("newStart") LocalDateTime newStart,
