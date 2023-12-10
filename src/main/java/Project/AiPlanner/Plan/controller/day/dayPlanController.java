@@ -46,37 +46,8 @@ public class dayPlanController {
 
 
         boolean allSaved = true;
-
-        // Fetch existing fixed day plans for the user
-        List<DayPlanEntity> existingFixedDayPlans = dayPlanRepository.findFixedPlansByUserId(userId);
-
-        // Loop through new plans and check for overlapping time ranges with existing fixed plans
-        for (DayPlanDto newPlan : dayPlanDtoList) {
-            LocalDateTime newStart = newPlan.getStart();
-            LocalDateTime newEnd = newPlan.getEnd();
-
-            boolean overlapWithFixedPlan = false;
-
-            for (DayPlanEntity existingFixedPlan : existingFixedDayPlans) {
-                if (existingFixedPlan.getPlan().equals("고정")) {
-                    LocalDateTime existingFixedStart = existingFixedPlan.getStart();
-                    LocalDateTime existingFixedEnd = existingFixedPlan.getEnd();
-
-                    // Check for overlapping time ranges with existing fixed plans
-                    if (newStart.isBefore(existingFixedEnd) && newEnd.isAfter(existingFixedStart)) {
-                        overlapWithFixedPlan = true;
-                        break;
-                    }
-                }
-            }
-
-            // If overlap with fixed plan found, skip saving this plan
-            if (overlapWithFixedPlan) {
-                continue;
-            }
-
-            // Save the new plan
-            if (!dayPlanService.savePlan(newPlan, userId)) {
+        for (DayPlanDto dayPlanDto : dayPlanDtoList) {
+            if (!dayPlanService.savePlan(dayPlanDto, userId)) {
                 allSaved = false;
                 break;
             }
@@ -88,7 +59,6 @@ public class dayPlanController {
             return new ResponseEntity<>("요청이 잘못되었습니다. 다시 일정을 확인해주세요", HttpStatus.BAD_REQUEST);
         }
     }
-
 
 
     @PostMapping("/delete")
