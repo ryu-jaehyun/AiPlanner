@@ -36,7 +36,7 @@ public class dayPlanController {
 
     @PostMapping("/add")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> createDayPlan(@Valid @RequestBody DayPlanDto dayPlanDto) {
+    public ResponseEntity<String> createDayPlan(@Valid @RequestBody List<DayPlanDto> dayPlanDtoList) {
 
         String userId = SecurityUtil.getCurrentUserId();
 
@@ -44,10 +44,15 @@ public class dayPlanController {
 
 
 
+        boolean allSaved = true;
+        for (DayPlanDto dayPlanDto : dayPlanDtoList) {
+            if (!dayPlanService.savePlan(dayPlanDto, userId)) {
+                allSaved = false;
+                break;
+            }
+        }
 
-        if (dayPlanService.
-                savePlan(dayPlanDto, userId)) {
-           // List<DayPlanEntity> dayPlanEntities = dayPlanRepository.findByUserId(userId);
+        if (allSaved) {
             return new ResponseEntity<>("일일일정 등록 성공!", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("요청이 잘못되었습니다. 다시 일정을 확인해주세요", HttpStatus.BAD_REQUEST);
