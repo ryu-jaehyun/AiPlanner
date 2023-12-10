@@ -51,9 +51,11 @@ public class UserPlanTypeService {
         List<UserPlanTypeEntity> existingDefaults = userPlanTypeRepository.findByUserId(userId);
         if (existingDefaults.isEmpty()) {
             List<UserPlanTypeEntity> defaultPlanTypeColors = new ArrayList<>();
-            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#DC8686", "여가시간"));
-            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#9ADE7B", "자기계발"));
-            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#6DB9EF", "중요일정"));
+            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#DC8686", "식사"));
+            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#3081D0", "공부"));
+            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#6DB9EF", "휴식"));
+            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#FF6C22", "여가"));
+            defaultPlanTypeColors.add(new UserPlanTypeEntity(userId, "#9ADE7B", "운동"));
 
             userPlanTypeRepository.saveAll(defaultPlanTypeColors);
         }
