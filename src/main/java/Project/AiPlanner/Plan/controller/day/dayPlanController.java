@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -46,6 +47,20 @@ public class dayPlanController {
 
         boolean allSaved = true;
         for (DayPlanDto dayPlanDto : dayPlanDtoList) {
+            LocalDateTime newStart = dayPlanDto.getStart();
+            LocalDateTime newEnd = dayPlanDto.getEnd();
+
+            // Query to find overlapping plans in the database with "plan" column as "고정"
+            List<DayPlanEntity> overlappingPlans = dayPlanRepository.findOverlappingFixedPlans(userId, newStart, newEnd);
+
+            // Delete overlapping plans from the database with "plan" column as "고정"
+            for (DayPlanEntity overlappingPlan : overlappingPlans) {
+                if (overlappingPlan.getPlan().equals("고정")) {
+                    dayPlanRepository.delete(overlappingPlan);
+                }
+            }
+
+            // Save the new plan
             if (!dayPlanService.savePlan(dayPlanDto, userId)) {
                 allSaved = false;
                 break;

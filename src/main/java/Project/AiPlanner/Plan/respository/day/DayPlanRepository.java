@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,15 @@ public interface DayPlanRepository extends CrudRepository<DayPlanEntity, Integer
     Integer countByUserId(String userId);
     @Query("SELECT SUM(dp.success) FROM DayPlanEntity dp WHERE dp.userId = :userId")
     Integer sumSuccessByUserId(@Param("userId") String userId);
+
+    // 겹치는 "고정"인 일정을 찾는 메서드
+    @Query("SELECT dp FROM DayPlanEntity dp " +
+            "WHERE dp.userId = :userId " +
+            "AND dp.plan = '고정' " +
+            "AND (:newStart < dp.endTime AND :newEnd > dp.startTime)")
+    List<DayPlanEntity> findOverlappingFixedPlans(
+            @Param("userId") String userId,
+            @Param("newStart") LocalDateTime newStart,
+            @Param("newEnd") LocalDateTime newEnd
+    );
 }
