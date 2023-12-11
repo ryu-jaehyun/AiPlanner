@@ -1,6 +1,7 @@
 package Project.AiPlanner.Plan.controller.united;
 
 
+import Project.AiPlanner.Plan.Dto.UpdateSuccessResponseDto;
 import Project.AiPlanner.Plan.Dto.day.DaySuccessDto;
 import Project.AiPlanner.Plan.Dto.month.MonthSuccessDto;
 import Project.AiPlanner.Plan.respository.day.DayPlanRepository;
@@ -25,7 +26,7 @@ public class successController {
     private  final UserRepository userRepository;
     @PatchMapping("/day")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> updateSuccess(@RequestBody DaySuccessDto daySuccessDto) {
+    public ResponseEntity<UpdateSuccessResponseDto> updateSuccess(@RequestBody DaySuccessDto daySuccessDto) {
         String userId = SecurityUtil.getCurrentUserId();
         String userName = userRepository.findUserNameByUserId(userId);
         log.info("사용자아이디 ={}",userId);
@@ -43,7 +44,11 @@ public class successController {
             message = "달성률최고! 꾸준히 유지하세요!";
         }
 
-        return ResponseEntity.ok(userName + "의 달성률 : " + result + ". " + message);
+        UpdateSuccessResponseDto response = new UpdateSuccessResponseDto();
+        response.setMessage(message);
+        response.setResult(result);
+
+        return ResponseEntity.ok(response);
     }
 
 
@@ -51,7 +56,7 @@ public class successController {
 
     @PatchMapping("/month")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> updateSuccess(@RequestBody MonthSuccessDto monthSuccessDto) {
+    public ResponseEntity<UpdateSuccessResponseDto> updateSuccess(@RequestBody MonthSuccessDto monthSuccessDto) {
         String userId = SecurityUtil.getCurrentUserId();
         String userName = userRepository.findUserNameByUserId(userId);
         log.info("사용자아이디 ={}",userId);
@@ -69,6 +74,10 @@ public class successController {
             message = "달성률최고! 꾸준히 유지하세요!";
         }
 
-        return ResponseEntity.ok(userName + "의 달성률 : " + result + ". " + message);
+        UpdateSuccessResponseDto response = new UpdateSuccessResponseDto();
+        response.setMessage(message);
+        response.setResult(result);
+
+        return ResponseEntity.ok(response);
     }
 }

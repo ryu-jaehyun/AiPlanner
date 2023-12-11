@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -34,4 +35,9 @@ public interface DayPlanRepository extends CrudRepository<DayPlanEntity, Integer
     );
     @Query("SELECT dp FROM DayPlanEntity dp WHERE dp.userId = :userId AND dp.plan = '고정'")
     List<DayPlanEntity> findFixedPlansByUserId(String userId);
+
+    List<DayPlanEntity> findByUserIdAndPlanType(String userId, String planType);
+
+    @Query("SELECT d FROM DayPlanEntity d WHERE d.userId = :userId AND DATE(d.start) = :date AND d.plan = :plan")
+    List<DayPlanEntity> findByUserIdAndStartAndPlan(String userId, LocalDate date, String plan);
 }

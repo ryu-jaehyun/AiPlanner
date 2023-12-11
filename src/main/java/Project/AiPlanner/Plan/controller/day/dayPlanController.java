@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -44,6 +45,12 @@ public class dayPlanController {
         log.info("사용자아이디 ={}",userId);
 
 
+// 리스트의 두 번째 데이터의 날짜를 추출합니다.
+        LocalDate commonDate = dayPlanDtoList.get(1).getStart().toLocalDate();
+
+        // 추출한 날짜를 기반으로 유동일정 삭제
+        List<DayPlanEntity> fluidPlans = dayPlanRepository.findByUserIdAndStartAndPlan(userId, commonDate, "유동");
+        dayPlanRepository.deleteAll(fluidPlans);
 
         boolean allSaved = true;
         for (DayPlanDto dayPlanDto : dayPlanDtoList) {
