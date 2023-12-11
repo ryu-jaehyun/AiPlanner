@@ -37,7 +37,7 @@ public class dayPlanController {
 
 
     @PostMapping("/add")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> createDayPlan(@Valid @RequestBody List<DayPlanDto> dayPlanDtoList) {
 
         String userId = SecurityUtil.getCurrentUserId();
@@ -75,7 +75,7 @@ public class dayPlanController {
 
 
     @PostMapping("/delete")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> deleteDayPlan(@Valid @RequestBody DayPlanDeleteDto dayPlanDeleteDto) {
 
 
@@ -95,7 +95,7 @@ public class dayPlanController {
         }
     }
     @PatchMapping("/update")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> updateDayPlan(@Valid @RequestBody DayPlanUpdateDto dayPlanUpdateDto){
         String userId = SecurityUtil.getCurrentUserId();
 
@@ -109,7 +109,7 @@ public class dayPlanController {
             return new ResponseEntity<>("요청이 잘못되었습니다. 삭제할 일정을 다시 확인해주세요", HttpStatus.BAD_REQUEST);
         }}
     @GetMapping("/get")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<Object> getDayPlan(){
             String userId = SecurityUtil.getCurrentUserId();
         List<DayPlanEntity> dayPlanEntities = dayPlanRepository.findByUserId(userId);

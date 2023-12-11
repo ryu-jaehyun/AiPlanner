@@ -36,7 +36,7 @@ public class MonthPlanController {
 
 
     @PostMapping("/add")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> createMonthPlan(@Valid @RequestBody MonthPlanDto monthPlanDto) {
 
         String userId = SecurityUtil.getCurrentUserId();
@@ -54,7 +54,7 @@ public class MonthPlanController {
     }
 
     @PostMapping("/delete")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> deleteMonthPlan(@Valid @RequestBody MonthPlanDeleteDto monthPlanDeleteDto) {
 
 
@@ -74,7 +74,7 @@ public class MonthPlanController {
         }
     }
     @PatchMapping("/update")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> updateMonthPlan(@RequestBody MonthPlanUpdateDto monthPlanUpdateDto){
         String userId = SecurityUtil.getCurrentUserId();
 
@@ -93,7 +93,7 @@ public class MonthPlanController {
 
     }
     @GetMapping("/get")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<Object> getMonthPlan(){
         String userId = SecurityUtil.getCurrentUserId();
         List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);

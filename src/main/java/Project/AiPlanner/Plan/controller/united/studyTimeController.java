@@ -27,7 +27,7 @@ public class studyTimeController {
 
 
     @GetMapping("/totalStudyTime")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<List<Long>> getTotalStudyTime() {
         String userId = SecurityUtil.getCurrentUserId();
         // 공부 타입이면서 success가 1인 일정들을 가져옵니다.

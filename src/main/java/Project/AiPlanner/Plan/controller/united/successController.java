@@ -25,7 +25,7 @@ public class successController {
     private final MonthPlanService monthPlanService;
     private  final UserRepository userRepository;
     @PatchMapping("/day")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<UpdateSuccessResponseDto> updateSuccess(@RequestBody DaySuccessDto daySuccessDto) {
         String userId = SecurityUtil.getCurrentUserId();
         String userName = userRepository.findUserNameByUserId(userId);
@@ -55,7 +55,7 @@ public class successController {
 
 
     @PatchMapping("/month")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<UpdateSuccessResponseDto> updateSuccess(@RequestBody MonthSuccessDto monthSuccessDto) {
         String userId = SecurityUtil.getCurrentUserId();
         String userName = userRepository.findUserNameByUserId(userId);

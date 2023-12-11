@@ -30,7 +30,7 @@ public class UserController {
 
 
     //아이디 중복 검증
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     @PostMapping("/checkId")
     public ResponseEntity<String> checkId(@RequestBody Map<String,String> request){
         String userId = request.get("userId");
@@ -50,7 +50,7 @@ public class UserController {
     }
 
     //아이디찾기
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     @PostMapping("/findId")
     public ResponseEntity<String> findId(@RequestBody Map<String,String> request){
         String phoneNum = request.get("phoneNum");
@@ -72,7 +72,7 @@ public class UserController {
         }
     }
     //비밀번호 찾기
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     @PostMapping("/findPw")
     public ResponseEntity<String> findPw( @Valid @RequestBody UserPwRequestDto userPwRequestDto) {
 
@@ -98,7 +98,7 @@ public class UserController {
 
     //회원가입
     @PostMapping("/register")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> createUser( @Valid @RequestBody UserFormDto userFormDto) {
 
         String userId = userFormDto.getUserId();

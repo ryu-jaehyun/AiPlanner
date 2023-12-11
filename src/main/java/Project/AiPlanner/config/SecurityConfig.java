@@ -56,7 +56,7 @@ public class SecurityConfig  {
                 .cors(cors -> cors
                         .configurationSource(request -> {
                             CorsConfiguration config = new CorsConfiguration();
-                            config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                            config.setAllowedOrigins(Collections.singletonList("http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/"));
                             config.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
                             config.setAllowedHeaders(Collections.singletonList("*"));
                             return config;
@@ -69,7 +69,7 @@ public class SecurityConfig  {
                 )
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/user/checkId","/findPw","/kakao", "/user/login","/user/register","/user/findId","/user/findPw").permitAll()
+                        .requestMatchers("/user/checkId","/findPw", "/user/login","/user/register","/user/findId","/user/findPw").permitAll()
                         .anyRequest().authenticated()
                 )
 
