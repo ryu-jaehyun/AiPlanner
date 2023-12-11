@@ -45,10 +45,16 @@ public class dayPlanController {
         log.info("사용자아이디 ={}",userId);
 
 
-// 리스트의 두 번째 데이터의 날짜를 추출합니다.
-        LocalDate commonDate = dayPlanDtoList.get(1).getStart().toLocalDate();
+        if (dayPlanDtoList.size() == 1) {
+            // 배열에 데이터가 1개인 경우, 삭제하지 않고 그대로 저장
+            if (dayPlanService.savePlan(dayPlanDtoList.get(0), userId)) {
+                return new ResponseEntity<>("일일일정 등록 성공!", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("요청이 잘못되었습니다. 다시 일정을 확인해주세요", HttpStatus.BAD_REQUEST);
+            }
+        }
 
-        // 추출한 날짜를 기반으로 유동일정 삭제
+        LocalDate commonDate = dayPlanDtoList.get(1).getStart().toLocalDate();
         List<DayPlanEntity> fluidPlans = dayPlanRepository.findByUserIdAndStartAndPlan(userId, commonDate, "유동");
         dayPlanRepository.deleteAll(fluidPlans);
 
