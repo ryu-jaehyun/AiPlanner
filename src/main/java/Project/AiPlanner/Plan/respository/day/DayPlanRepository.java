@@ -40,4 +40,6 @@ public interface DayPlanRepository extends CrudRepository<DayPlanEntity, Integer
 
     @Query("SELECT d FROM DayPlanEntity d WHERE d.userId = :userId AND DATE(d.start) = :date AND d.plan = :plan")
     List<DayPlanEntity> findByUserIdAndStartAndPlan(String userId, LocalDate date, String plan);
+
+    List<DayPlanEntity> findByUserIdAndPlanTypeAndSuccess(String userId, String 공부, int success);
 }

@@ -30,7 +30,8 @@ public class studyTimeController {
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Long>> getTotalStudyTime() {
         String userId = SecurityUtil.getCurrentUserId();
-        List<DayPlanEntity> studyPlans = dayPlanRepository.findByUserIdAndPlanType(userId, "공부");
+        // 공부 타입이면서 success가 1인 일정들을 가져옵니다.
+        List<DayPlanEntity> studyPlans = dayPlanRepository.findByUserIdAndPlanTypeAndSuccess(userId, "공부", 1);
 
         Duration totalDuration = Duration.ZERO;
 
