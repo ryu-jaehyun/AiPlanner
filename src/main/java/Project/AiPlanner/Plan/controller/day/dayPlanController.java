@@ -74,7 +74,7 @@ public class dayPlanController {
     }
 
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> deleteDayPlan(@Valid @RequestBody DayPlanDeleteDto dayPlanDeleteDto) {
 

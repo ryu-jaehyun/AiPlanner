@@ -45,6 +45,8 @@ public class UserEntity {
     // 생성자, getter, setter, 기타 메서드
 
 
+
+
     @ManyToMany
     @JoinTable(
             name = "user_authority",

@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/get")
+@RequestMapping("/plan")
 public class studyTimeController {
 
     private final DayPlanRepository dayPlanRepository;
