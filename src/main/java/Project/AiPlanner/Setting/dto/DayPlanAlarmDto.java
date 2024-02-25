@@ -1,7 +1,6 @@
-package Project.AiPlanner.Plan.Dto.day;
+package Project.AiPlanner.Setting.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -11,11 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @AllArgsConstructor
-public class DayPlanDto {
-
-
-
-
+public class DayPlanAlarmDto {
 
     @NotNull(message = "일정이름은 필수 값입니다.")
     private String planName;
@@ -32,14 +27,9 @@ public class DayPlanDto {
     @NotNull(message = "종료시간은 필수 값입니다.")
     private LocalDateTime end;
 
+    @NotNull(message="이메일은 필수 값입니다.")
+    private String email;
+
     @NotNull(message = "일정구분은 필수 값입니다.")
     private String plan;
-
-    @NotNull(message  = "일정구분 색값은 필수값 입니다.")
-    private String color;
-
-    private Integer success;
-
-
-    private String dayOfWeek;
 }

@@ -70,6 +70,7 @@ public class SecurityConfig  {
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers("/user/checkId","/findPw", "/user/login","/user/register","/user/findId","/user/findPw").permitAll()
+                        .requestMatchers("/manage/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
 

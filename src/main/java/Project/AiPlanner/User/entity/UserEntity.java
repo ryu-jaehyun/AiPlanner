@@ -46,7 +46,8 @@ public class UserEntity {
 
 
 
-
+    //초기 관리자와 달리 새로운 관리자를 추가할 때 초기 관리자에게 승인을 받고 승인을 받으면 관리자 계정을 생성한다.
+    //이후 초기 관리자가 해당 계정에 관리자 권한을 부여한다.
     @ManyToMany
     @JoinTable(
             name = "user_authority",

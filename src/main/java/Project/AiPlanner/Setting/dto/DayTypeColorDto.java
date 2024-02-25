@@ -1,4 +1,4 @@
-package Project.AiPlanner.Plan.Dto.day;
+package Project.AiPlanner.Setting.dto;
 
 
 import lombok.Data;

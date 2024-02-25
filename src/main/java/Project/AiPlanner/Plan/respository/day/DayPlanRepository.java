@@ -1,5 +1,6 @@
 package Project.AiPlanner.Plan.respository.day;
 
+import Project.AiPlanner.Setting.dto.DayPlanAlarmDto;
 import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -42,4 +43,6 @@ public interface DayPlanRepository extends CrudRepository<DayPlanEntity, Integer
     List<DayPlanEntity> findByUserIdAndStartAndPlan(String userId, LocalDate date, String plan);
 
     List<DayPlanEntity> findByUserIdAndPlanTypeAndSuccess(String userId, String 공부, int success);
+
+    List<DayPlanAlarmDto> findByStartAfter(LocalDateTime startDate);
 }

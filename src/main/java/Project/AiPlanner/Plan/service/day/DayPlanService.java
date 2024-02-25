@@ -1,19 +1,20 @@
 package Project.AiPlanner.Plan.service.day;
 
-import Project.AiPlanner.Plan.Dto.day.DaySuccessDto;
-import Project.AiPlanner.Plan.Dto.day.DayPlanDto;
-import Project.AiPlanner.Plan.Dto.day.DayPlanUpdateDto;
-import Project.AiPlanner.Plan.Dto.day.DayTypeColorDto;
+import Project.AiPlanner.Plan.Dto.day.*;
 import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
 import Project.AiPlanner.Plan.entity.month.MonthPlanEntity;
 import Project.AiPlanner.Plan.respository.day.DayPlanRepository;
 import Project.AiPlanner.Plan.respository.month.MonthPlanRepository;
+import Project.AiPlanner.Setting.dto.DayPlanAlarmDto;
+import Project.AiPlanner.Setting.dto.DaySuccessDto;
+import Project.AiPlanner.Setting.dto.DayTypeColorDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -179,6 +180,11 @@ public class DayPlanService {
         }
 
         return result;
+    }
+
+    public List<DayPlanAlarmDto> getUpcomingDayPlans(LocalDateTime startDate) {
+        // 이전 날짜 이후에 시작하는 모든 일정을 조회
+        return dayPlanRepository.findByStartAfter(startDate);
     }
 }
 

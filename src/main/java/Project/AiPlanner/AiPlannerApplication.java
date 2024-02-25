@@ -3,7 +3,9 @@ package Project.AiPlanner;
 import Project.AiPlanner.User.entity.UserEntity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @SpringBootApplication
 public class AiPlannerApplication {
 

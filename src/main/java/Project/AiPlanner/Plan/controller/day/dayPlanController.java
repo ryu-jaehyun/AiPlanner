@@ -4,25 +4,20 @@ package Project.AiPlanner.Plan.controller.day;
 import Project.AiPlanner.Plan.Dto.day.DayPlanDeleteDto;
 import Project.AiPlanner.Plan.Dto.day.DayPlanDto;
 import Project.AiPlanner.Plan.Dto.day.DayPlanUpdateDto;
-import Project.AiPlanner.Plan.Dto.day.DayTypeColorDto;
+import Project.AiPlanner.Setting.dto.DayTypeColorDto;
 import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
 import Project.AiPlanner.Plan.respository.day.DayPlanRepository;
-import Project.AiPlanner.Plan.respository.month.MonthPlanRepository;
 import Project.AiPlanner.Plan.service.day.DayPlanService;
-import Project.AiPlanner.Plan.service.month.MonthPlanService;
-import Project.AiPlanner.User.Dto.UserPlanTypeColorDto;
 import Project.AiPlanner.User.service.UserService;
 import Project.AiPlanner.Util.SecurityUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
