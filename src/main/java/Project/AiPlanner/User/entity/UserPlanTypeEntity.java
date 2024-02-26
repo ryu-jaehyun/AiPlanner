@@ -4,8 +4,6 @@ package Project.AiPlanner.User.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-
 @Entity
 @Builder
 @AllArgsConstructor
@@ -21,13 +19,13 @@ public class UserPlanTypeEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "user_id", nullable = false,length = 20)
+    @Column(name = "user_id", nullable = false, length = 20)
     private String userId;
 
-    @Column(name = "color", nullable = false,length = 30)
+    @Column(name = "color", nullable = false, length = 30)
     private String color;
 
-    @Column(name = "plan_type",nullable = false, length = 20)
+    @Column(name = "plan_type", nullable = false, length = 20)
     private String planType;
 
 

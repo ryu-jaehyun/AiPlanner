@@ -106,11 +106,12 @@ public class UserController {
 
         return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
+
     @PostMapping("/signup/admin")
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> createAdmin(@Valid @RequestBody AdminRegistrationDto adminDto) {
 
-        if (adminDto.getAdminCode()=="vo6182jsmruby1004") {
+        if (adminDto.getAdminCode() == "vo6182jsmruby1004") {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않은 관리자 인증 코드입니다.");
         }
         adminService.registerAdmin(adminDto);

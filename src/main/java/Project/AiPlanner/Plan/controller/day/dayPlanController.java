@@ -4,7 +4,6 @@ package Project.AiPlanner.Plan.controller.day;
 import Project.AiPlanner.Plan.Dto.day.DayPlanDeleteDto;
 import Project.AiPlanner.Plan.Dto.day.DayPlanDto;
 import Project.AiPlanner.Plan.Dto.day.DayPlanUpdateDto;
-import Project.AiPlanner.Setting.dto.DayTypeColorDto;
 import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
 import Project.AiPlanner.Plan.respository.day.DayPlanRepository;
 import Project.AiPlanner.Plan.service.day.DayPlanService;
@@ -37,7 +36,7 @@ public class dayPlanController {
 
         String userId = SecurityUtil.getCurrentUserId();
 
-        log.info("사용자아이디 ={}",userId);
+        log.info("사용자아이디 ={}", userId);
 
 
         if (dayPlanDtoList.size() == 1) {
@@ -76,57 +75,42 @@ public class dayPlanController {
 
         String userId = SecurityUtil.getCurrentUserId();
 
-        log.info("사용자아이디 ={}",userId);
+        log.info("사용자아이디 ={}", userId);
         Integer planId = dayPlanDeleteDto.getPlanId();
 
         log.info("planid ={}", planId);
 
-        if(dayPlanService.deleteDayPlan(planId, userId)){
+        if (dayPlanService.deleteDayPlan(planId, userId)) {
 
             return new ResponseEntity<>("일일일정 삭제 성공!", HttpStatus.OK);
-        }
-        else {
+        } else {
             return new ResponseEntity<>("요청이 잘못되었습니다. 삭제할 일정을 다시 확인해주세요", HttpStatus.BAD_REQUEST);
         }
     }
+
     @PatchMapping("/update")
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
-    public ResponseEntity<String> updateDayPlan(@Valid @RequestBody DayPlanUpdateDto dayPlanUpdateDto){
+    public ResponseEntity<String> updateDayPlan(@Valid @RequestBody DayPlanUpdateDto dayPlanUpdateDto) {
         String userId = SecurityUtil.getCurrentUserId();
 
-        log.info("사용자아이디 ={}",userId);
+        log.info("사용자아이디 ={}", userId);
         Integer planId = dayPlanUpdateDto.getPlanId();
-        if(dayPlanService.updateDayPlan(planId, userId,dayPlanUpdateDto)){
+        if (dayPlanService.updateDayPlan(planId, userId, dayPlanUpdateDto)) {
 
             return new ResponseEntity<>("일일일정 수정 성공!", HttpStatus.OK);
-        }
-        else {
+        } else {
             return new ResponseEntity<>("요청이 잘못되었습니다. 삭제할 일정을 다시 확인해주세요", HttpStatus.BAD_REQUEST);
-        }}
+        }
+    }
+
     @GetMapping("/get")
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
-    public ResponseEntity<Object> getDayPlan(){
-            String userId = SecurityUtil.getCurrentUserId();
+    public ResponseEntity<Object> getDayPlan() {
+        String userId = SecurityUtil.getCurrentUserId();
         List<DayPlanEntity> dayPlanEntities = dayPlanRepository.findByUserId(userId);
         return ResponseEntity.ok(dayPlanEntities);
-        }
-
-
-
-
-
-   // @GetMapping("/type")
-    //@CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Object> getUniquePlanTypesAndColors(){
-        String userId = SecurityUtil.getCurrentUserId();
-
-        log.info("사용자아이디 ={}",userId);
-        List<DayTypeColorDto> uniqueTypesColors = dayPlanService.getUniquePlanTypesAndColors(userId);
-        if(uniqueTypesColors == null){
-            return new ResponseEntity<>("일정타입을 등록해주세요",HttpStatus.OK);
-        }
-        return ResponseEntity.ok(uniqueTypesColors);
     }
 
-    }
+
+}
 

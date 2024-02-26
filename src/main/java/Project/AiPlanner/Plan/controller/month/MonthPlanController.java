@@ -4,7 +4,6 @@ package Project.AiPlanner.Plan.controller.month;
 import Project.AiPlanner.Plan.Dto.month.MonthPlanDeleteDto;
 import Project.AiPlanner.Plan.Dto.month.MonthPlanDto;
 import Project.AiPlanner.Plan.Dto.month.MonthPlanUpdateDto;
-import Project.AiPlanner.Plan.Dto.month.MonthTypeColorDto;
 import Project.AiPlanner.Plan.entity.month.MonthPlanEntity;
 import Project.AiPlanner.Plan.respository.month.MonthPlanRepository;
 import Project.AiPlanner.Plan.service.month.MonthPlanService;
@@ -36,13 +35,13 @@ public class MonthPlanController {
 
         String userId = SecurityUtil.getCurrentUserId();
 
-        log.info("사용자아이디 ={}",userId);
+        log.info("사용자아이디 ={}", userId);
 
 
         if (monthPlanService.saveMonthPlan(monthPlanDto, userId)) {
-           // List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);
-            return new ResponseEntity<>("월별일정 등록 성공!", HttpStatus.OK);}
-        else
+
+            return new ResponseEntity<>("월별일정 등록 성공!", HttpStatus.OK);
+        } else
             return new ResponseEntity<>("요청이 잘못되었습니다. 다시 일정을 확인해주세요", HttpStatus.BAD_REQUEST);
 
 
@@ -55,57 +54,43 @@ public class MonthPlanController {
 
         String userId = SecurityUtil.getCurrentUserId();
 
-        log.info("사용자아이디 ={}",userId);
+        log.info("사용자아이디 ={}", userId);
         Integer planId = monthPlanDeleteDto.getPlanId();
 
         log.info("planid ={}", planId);
 
-        if(monthPlanService.deleteMonthPlan(planId, userId)){
+        if (monthPlanService.deleteMonthPlan(planId, userId)) {
 
-            return new ResponseEntity<>("월별일정 삭제 성공!", HttpStatus.OK);}
-
-        else {
+            return new ResponseEntity<>("월별일정 삭제 성공!", HttpStatus.OK);
+        } else {
             return new ResponseEntity<>("요청이 잘못되었습니다. 삭제할 일정을 다시 확인해주세요", HttpStatus.BAD_REQUEST);
         }
     }
+
     @PatchMapping("/update")
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
-    public ResponseEntity<String> updateMonthPlan(@RequestBody MonthPlanUpdateDto monthPlanUpdateDto){
+    public ResponseEntity<String> updateMonthPlan(@RequestBody MonthPlanUpdateDto monthPlanUpdateDto) {
         String userId = SecurityUtil.getCurrentUserId();
 
-        log.info("사용자아이디 ={}",userId);
+        log.info("사용자아이디 ={}", userId);
         Integer planId = monthPlanUpdateDto.getPlanId();
-        if(monthPlanService.updateMonthPlan(planId, userId,monthPlanUpdateDto)){
+        if (monthPlanService.updateMonthPlan(planId, userId, monthPlanUpdateDto)) {
 
-            return new ResponseEntity<>("월별일정 수정 성공!", HttpStatus.OK);}
-        else {
+            return new ResponseEntity<>("월별일정 수정 성공!", HttpStatus.OK);
+        } else {
             return new ResponseEntity<>("요청이 잘못되었습니다. 삭제할 일정을 다시 확인해주세요", HttpStatus.BAD_REQUEST);
         }
 
 
-
-
-
     }
+
     @GetMapping("/get")
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
-    public ResponseEntity<Object> getMonthPlan(){
+    public ResponseEntity<Object> getMonthPlan() {
         String userId = SecurityUtil.getCurrentUserId();
         List<MonthPlanEntity> monthPlanEntities = monthPlanRepository.findByUserId(userId);
         return ResponseEntity.ok(monthPlanEntities);
     }
 
-    //@GetMapping("/type")
-    //@CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Object> getUniquePlanTypesAndColors(){
-        String userId = SecurityUtil.getCurrentUserId();
-
-        log.info("사용자아이디 ={}",userId);
-        List<MonthTypeColorDto> uniqueTypesColors = monthPlanService.getUniquePlanTypesAndColors(userId);
-        if(uniqueTypesColors == null){
-            return new ResponseEntity<>("일정타입을 등록해주세요",HttpStatus.OK);
-        }
-        return ResponseEntity.ok(uniqueTypesColors);
-    }
 
 }

@@ -1,9 +1,9 @@
 package Project.AiPlanner.User.controller;
 
+import Project.AiPlanner.User.Dto.LoginDto;
 import Project.AiPlanner.jwt.JwtFilter;
 import Project.AiPlanner.jwt.TokenDto;
 import Project.AiPlanner.jwt.TokenProvider;
-import Project.AiPlanner.User.Dto.LoginDto;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -32,18 +32,18 @@ public class AuthController {
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
 
 
-        log.info("loginDto= {},{}",loginDto.getUserId(),loginDto.getUserPw());
+        log.info("loginDto= {},{}", loginDto.getUserId(), loginDto.getUserPw());
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUserId(), loginDto.getUserPw());
-        
-        log.info("authenticatontoken={}",authenticationToken);
+
+        log.info("authenticatontoken={}", authenticationToken);
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         System.out.println("authentication = " + authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.createToken(authentication);
-        log.info("jwt={}",jwt);
+        log.info("jwt={}", jwt);
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);

@@ -1,4 +1,5 @@
 package Project.AiPlanner.User.Dto;
+
 import lombok.*;
 
 @Getter

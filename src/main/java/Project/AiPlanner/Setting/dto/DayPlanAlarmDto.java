@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -27,7 +28,7 @@ public class DayPlanAlarmDto {
     @NotNull(message = "종료시간은 필수 값입니다.")
     private LocalDateTime end;
 
-    @NotNull(message="이메일은 필수 값입니다.")
+    @NotNull(message = "이메일은 필수 값입니다.")
     private String email;
 
     @NotNull(message = "일정구분은 필수 값입니다.")

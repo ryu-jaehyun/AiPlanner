@@ -16,7 +16,6 @@ public class CorsConfig {
         config.addAllowedOrigin("http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }

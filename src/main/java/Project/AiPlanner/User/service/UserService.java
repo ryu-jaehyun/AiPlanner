@@ -1,7 +1,6 @@
 package Project.AiPlanner.User.service;
 
 import Project.AiPlanner.User.Dto.UserFormDto;
-import Project.AiPlanner.User.Dto.UserPwRequestDto;
 import Project.AiPlanner.User.entity.AuthorityEntity;
 import Project.AiPlanner.User.entity.UserEntity;
 import Project.AiPlanner.User.repository.UserRepository;
@@ -57,6 +56,7 @@ public class UserService {
 
         return UserFormDto.from(userRepository.save(user));
     }
+
     @Transactional(readOnly = true)
     public UserFormDto getUserWithAuthorities(String username) {
         return UserFormDto.from(userRepository.findOneWithAuthoritiesByUserName(username).orElse(null));
@@ -71,7 +71,9 @@ public class UserService {
         );
     }
 
-   /** 아이디 회원 중복 검증 메서드 **/
+    /**
+     * 아이디 회원 중복 검증 메서드
+     **/
     public boolean isUserIdUnique(String userId) {
         // 아이디로 사용자 조회
         List<UserEntity> existingUsers = userRepository.findByUserId(userId);
@@ -80,6 +82,7 @@ public class UserService {
         // 결과 리스트에 사용자가 포함되어 있다면 중복 아이디
         return existingUsers.isEmpty();
     }
+
     public String updateAndReturnTempPassword(String userId, String phoneNum) {
         // 임시 비밀번호 생성 (랜덤한 문자열)
         String tempPassword = generateRandomPassword(10);

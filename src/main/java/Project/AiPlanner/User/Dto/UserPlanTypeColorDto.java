@@ -18,6 +18,4 @@ public class UserPlanTypeColorDto {
     private String planType;
 
 
-
-
 }

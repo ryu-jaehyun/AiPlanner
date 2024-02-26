@@ -2,10 +2,9 @@ package Project.AiPlanner.Setting.controller;
 
 
 import Project.AiPlanner.Plan.Dto.UpdateSuccessResponseDto;
-import Project.AiPlanner.Setting.dto.DaySuccessDto;
-import Project.AiPlanner.Plan.Dto.month.MonthSuccessDto;
 import Project.AiPlanner.Plan.service.day.DayPlanService;
 import Project.AiPlanner.Plan.service.month.MonthPlanService;
+import Project.AiPlanner.Setting.dto.DaySuccessDto;
 import Project.AiPlanner.User.repository.UserRepository;
 import Project.AiPlanner.Util.SecurityUtil;
 import lombok.RequiredArgsConstructor;

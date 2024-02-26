@@ -1,6 +1,7 @@
 package Project.AiPlanner.Plan.service.day;
 
-import Project.AiPlanner.Plan.Dto.day.*;
+import Project.AiPlanner.Plan.Dto.day.DayPlanDto;
+import Project.AiPlanner.Plan.Dto.day.DayPlanUpdateDto;
 import Project.AiPlanner.Plan.entity.day.DayPlanEntity;
 import Project.AiPlanner.Plan.entity.month.MonthPlanEntity;
 import Project.AiPlanner.Plan.respository.day.DayPlanRepository;
@@ -50,6 +51,7 @@ public class DayPlanService {
             return false; // 예외 발생 시 false 반환
         }
     }
+
     public List<DayPlanDto> convertToFixDtoList(List<DayPlanEntity> entities) {
         return entities.stream()
                 .map(this::convertToFixDto)
@@ -67,9 +69,9 @@ public class DayPlanService {
     }
 
     @Transactional   //일반적으로 DB 데이터를 등록/수정/삭제하는 Service메서드는 @Transactional을 필수적으로 가져간다.
-    public boolean deleteDayPlan(Integer planId,String userId) {
+    public boolean deleteDayPlan(Integer planId, String userId) {
         try {
-            log.info("planid={}",planId);
+            log.info("planid={}", planId);
             dayPlanRepository.deleteByUserIdAndPlanId(userId, planId);
             return true;
         } catch (Exception e) {
@@ -77,10 +79,11 @@ public class DayPlanService {
             return false;
         }
     }
+
     @Transactional
-    public boolean updateDayPlan(Integer planId,String userId, DayPlanUpdateDto dayPlanUpdateDto) {
+    public boolean updateDayPlan(Integer planId, String userId, DayPlanUpdateDto dayPlanUpdateDto) {
         try {
-            Optional<DayPlanEntity> optionalDayPlan = dayPlanRepository.findByPlanIdAndUserId(planId,userId);
+            Optional<DayPlanEntity> optionalDayPlan = dayPlanRepository.findByPlanIdAndUserId(planId, userId);
 
             if (optionalDayPlan.isPresent()) {
                 DayPlanEntity dayPlan = optionalDayPlan.get();
@@ -119,6 +122,7 @@ public class DayPlanService {
             return false; // Update operation failed
         }
     }
+
     @Transactional
     public String updateSuccessAndGetAverage(DaySuccessDto daySuccessDto) {
         String userId = daySuccessDto.getUserId();
@@ -151,6 +155,7 @@ public class DayPlanService {
 
         return result;
     }
+
     public List<DayTypeColorDto> getUniquePlanTypesAndColors(String userId) {
         List<DayPlanEntity> userPlans = dayPlanRepository.findByUserId(userId);
         Map<String, String> typeColorMap = new HashMap<>();
@@ -189,4 +194,4 @@ public class DayPlanService {
 }
 
 
-    // 필요한 다른 비즈니스 로직을 구현할 수 있음
+// 필요한 다른 비즈니스 로직을 구현할 수 있음

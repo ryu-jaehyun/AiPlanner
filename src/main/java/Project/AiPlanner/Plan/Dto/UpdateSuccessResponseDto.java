@@ -9,7 +9,6 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 public class UpdateSuccessResponseDto {
-
     private String message;
     private String result;
 }

@@ -1,8 +1,8 @@
 package Project.AiPlanner.Setting.controller;
 
 
-import Project.AiPlanner.User.Dto.UserPlanTypeColorDto;
 import Project.AiPlanner.Setting.service.UserPlanTypeService;
+import Project.AiPlanner.User.Dto.UserPlanTypeColorDto;
 import Project.AiPlanner.Util.SecurityUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ import java.util.List;
 @RequestMapping("/setting")
 public class UserPlanContoller {
     private final UserPlanTypeService userPlanTypeService;
-
 
 
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")

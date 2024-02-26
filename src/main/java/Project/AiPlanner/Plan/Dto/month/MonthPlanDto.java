@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -13,9 +12,6 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 public class MonthPlanDto {
-
-
-
 
 
     @NotNull(message = "일정이름은 필수 값입니다.")

@@ -49,6 +49,7 @@ public class MonthPlanService {
             return false; // 예외 발생 시 false 반환
         }
     }
+
     public List<MonthPlanDto> convertToMonthDtoList(List<MonthPlanEntity> entities) {
         return entities.stream()
                 .map(this::convertToMonthDto)
@@ -61,9 +62,9 @@ public class MonthPlanService {
     }
 
     @Transactional   //일반적으로 DB 데이터를 등록/수정/삭제하는 Service메서드는 @Transactional을 필수적으로 가져간다.
-    public boolean deleteMonthPlan(Integer planId,String userId) {
+    public boolean deleteMonthPlan(Integer planId, String userId) {
         try {
-            log.info("planid={}",planId);
+            log.info("planid={}", planId);
             monthPlanRepository.deleteByUserIdAndPlanId(userId, planId);
             return true;
         } catch (Exception e) {
@@ -71,10 +72,11 @@ public class MonthPlanService {
             return false;
         }
     }
+
     @Transactional
-    public boolean updateMonthPlan(Integer planId,String userId, MonthPlanUpdateDto monthPlanUpdateDto) {
+    public boolean updateMonthPlan(Integer planId, String userId, MonthPlanUpdateDto monthPlanUpdateDto) {
         try {
-            Optional<MonthPlanEntity> optionalMonthPlan = monthPlanRepository.findByPlanIdAndUserId(planId,userId);
+            Optional<MonthPlanEntity> optionalMonthPlan = monthPlanRepository.findByPlanIdAndUserId(planId, userId);
 
             if (optionalMonthPlan.isPresent()) {
                 MonthPlanEntity monthPlan = optionalMonthPlan.get();
@@ -144,6 +146,7 @@ public class MonthPlanService {
 
         return result;
     }
+
     public List<MonthTypeColorDto> getUniquePlanTypesAndColors(String userId) {
         List<MonthPlanEntity> userPlans = monthPlanRepository.findByUserId(userId);
         Map<String, String> typeColorMap = new HashMap<>();

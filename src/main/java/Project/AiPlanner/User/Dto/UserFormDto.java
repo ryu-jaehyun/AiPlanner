@@ -2,8 +2,6 @@ package Project.AiPlanner.User.Dto;
 
 import Project.AiPlanner.User.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
@@ -47,8 +45,9 @@ public class UserFormDto {
 
 
     private Set<AuthorityDto> authorityDtoSet;
+
     public static UserFormDto from(UserEntity user) {
-        if(user == null) return null;
+        if (user == null) return null;
 
         return UserFormDto.builder()
                 .userName(user.getUserName())
