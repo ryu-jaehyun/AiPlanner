@@ -1,9 +1,11 @@
 package Project.AiPlanner.User.controller;
 
+import Project.AiPlanner.User.Dto.AdminRegistrationDto;
 import Project.AiPlanner.User.Dto.UserFormDto;
 import Project.AiPlanner.User.Dto.UserPwRequestDto;
 import Project.AiPlanner.User.entity.UserEntity;
 import Project.AiPlanner.User.repository.UserRepository;
+import Project.AiPlanner.User.service.AdminService;
 import Project.AiPlanner.User.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ public class UserController {
     private final UserRepository userRepository;
 
     private final UserService userService;
+
+    private final AdminService adminService;
 
 
     //아이디 중복 검증
@@ -102,7 +106,16 @@ public class UserController {
 
         return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
+    @PostMapping("/register/admin")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
+    public ResponseEntity<String> createAdmin(@Valid @RequestBody AdminRegistrationDto adminDto) {
 
+        if (adminDto.getAdminCode()=="vo6182jsmruby1004") {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않은 관리자 인증 코드입니다.");
+        }
+        adminService.registerAdmin(adminDto);
+        return ResponseEntity.ok("관리자 회원가입이 완료되었습니다.");
+    }
 
 
 }
