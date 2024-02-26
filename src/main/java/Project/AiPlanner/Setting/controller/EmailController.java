@@ -5,10 +5,7 @@ import Project.AiPlanner.Setting.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -20,6 +17,7 @@ public class EmailController {
     private EmailService emailService;
 
     @PostMapping("/send-email")
+    @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public String sendEmail(@RequestBody DayPlanAlarmDto request) {
         String to = request.getEmail();
         String subject = request.getPlanName();
