@@ -47,7 +47,7 @@
 
 ### 일정 관리
 
-+  월별일정, 일일일정 별 일정목록을 조회할 수 있다. [월별일정 보기]()
++  월별일정, 일일일정 별 일정목록을 조회할 수 있다. [월별일정 보기](https://github.com/ryu-jaehyun/AiPlanner/blob/master/images/%EC%9B%94%EB%B3%84%EC%9D%BC%EC%A0%95.png?raw=true)  [일일일정 보기](https://github.com/ryu-jaehyun/AiPlanner/blob/master/images/%EC%9D%BC%EC%9D%BC%EC%9D%BC%EC%A0%95.png?raw=true)
 +  월별일정, 일일일정을 구분해 등록할 수 있다.
     + 일일일정은 다시 고정일정, 유동일정으로 구분된다.
     + 고정일정은 월,수,금 이런 형식으로 요일을 선택해 수업, 아르바이트 등등 유동 가능성이 거의 없는 일정이다.
