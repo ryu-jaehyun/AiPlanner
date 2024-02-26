@@ -22,7 +22,13 @@
 > Backend  : 하정민(AI), 류제현(Server)-PL
 
 
+# ERD 구조
+
+
+
+
 # 시스템 아키텍쳐
 
+![시스템 아키텍쳐](https://github.com/ryu-jaehyun/AiPlanner/blob/master/images/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5%ED%94%8C%EB%9E%98%EB%84%88-%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90.png?raw=true)
 
 
