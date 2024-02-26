@@ -61,9 +61,34 @@
 + 월별일정, 일일일정 모두 각 일정마다 체크박스에 체크함으로써 달성표시를 할 수 있다. --> 체크할때마다 갱신된 달성률과 달성률에 따른 특정 문구도 볼수 있다.
 + 일일 일정을 조회할때 총 공부시간을 확인할 수 있다.
 + 기본 5가지 일정타입 이외에 일정타입을 사용자가 직접 등록하고 그에 해당하는 색깔도 정할수 있다.
-+ 매일 자정에 사용자 이메일로 일일일정에 대한 정보가 전송된다.
++ 이메일을 기입하고 이메일 전송 동의 버튼을 누르면 매일 자정에 사용자 이메일로 일일일정에 대한 정보가 전송된다.
 
 # API 명세서
 
+|  **Domain** |        **URL**       | **Http Method** |      **Description**     |
+|:-----------:|:--------------------:|:---------------:|:------------------------:|
+|   **User**  |     /user/checkId    |       POST      |      아이디 중복검증     |
+|             |     /user/signup     |       POST      |      사용자 회원가입     |
+|             |     /user/findId     |       POST      |        아이디 찾기       |
+|             |     /user/findPw     |       POST      |       비밀번호 찾기      |
+|             |      /user/login     |       POST      |       사용자 로그인      |
+|   **Plan**  |     /plan/day/add    |       POST      |       일일일정 등록      |
+|             |     /plan/day/get    |       GET       |       일일일정 조회      |
+|             |   /plan/day/update   |      PATCH      |       일일일정 수정      |
+|             |   /plan/day/delete   |      DELETE     |       일일일정 삭제      |
+|             |    /plan/month/add   |       POST      |       월별일정 등록      |
+|             |    /plan/month/get   |       GET       |       월별일정 조회      |
+|             |  /plan/month/update  |      PATCH      |       월별일정 수정      |
+|             |  /plan/month/delete  |      DELETE     |       월별일정 삭제      |
+| **Setting** |   /setting/success   |       POST      |    사용자 달성률 표시    |
+|             | /setting/study-total |       GET       |  사용자 총 공부시간 표시 |
+|             |   /setting/type/add  |       POST      |       일정타입 추가      |
+|             |   /setting/type/get  |       GET       |       일정타입 조회      |
+|             |  /setting/send-email |       POST      | 일정 시작 전 이메일 전송 |
 
 
+
+# 프로젝트 소감
+
+- 새로운 기술 스택을 학습하고 적용하면서 보안 및 데이터 액세스에 대한 기능이 이전 프로젝트보다 향상되어서 성취감이 컸다.
+- 관리자에 대한 기능과 다양한 이벤트(ex. 달성률 상위 10명에게 기프티콘 증정) 등 초기 설계를 더 확장성있게 했으면 프로젝트 퀄리티가 상승했을것에 대한 아쉬운점이 있다.
