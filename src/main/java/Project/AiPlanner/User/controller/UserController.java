@@ -8,10 +8,8 @@ import Project.AiPlanner.User.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -32,7 +30,7 @@ public class UserController {
     //아이디 중복 검증
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     @PostMapping("/checkId")
-    public ResponseEntity<String> checkId(@RequestBody Map<String,String> request){
+    public ResponseEntity<String> checkId(@RequestBody Map<String, String> request) {
         String userId = request.get("userId");
 
         //아이디 빈값? -> 입력하라고 요청+400 error
@@ -40,22 +38,22 @@ public class UserController {
             return new ResponseEntity<>("아이디를 입력해주세요", HttpStatus.BAD_REQUEST);
         }
         //아이디 중복 x? -> 그대로 회원가입 절차진행
-        else if(userService.isUserIdUnique(userId)){
-            return new ResponseEntity<>("아이디 생성 가능",HttpStatus.OK);
+        else if (userService.isUserIdUnique(userId)) {
+            return new ResponseEntity<>("아이디 생성 가능", HttpStatus.OK);
         }
         //아이디 중복 ? -> 중복이라고 에러 반환
         else {
-            return new ResponseEntity<>("아이디 중복,다른아이디를 입력해주세요",HttpStatus.CONFLICT);
+            return new ResponseEntity<>("아이디 중복,다른아이디를 입력해주세요", HttpStatus.CONFLICT);
         }
     }
 
     //아이디찾기
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     @PostMapping("/findId")
-    public ResponseEntity<String> findId(@RequestBody Map<String,String> request){
+    public ResponseEntity<String> findId(@RequestBody Map<String, String> request) {
         String phoneNum = request.get("phoneNum");
         //아이디 빈값? -> 입력하라고 요청+400 error
-        log.info("phoneNum={}",phoneNum);
+        log.info("phoneNum={}", phoneNum);
         Optional<UserEntity> userOptional = userRepository.findUserIdByPhoneNum(phoneNum);
         if (userOptional.isPresent()) {
             UserEntity userEntity = userOptional.get();
@@ -63,43 +61,37 @@ public class UserController {
             // 여기서 userId 사용
             String message = "찾으시는 id는 " + userId + "입니다";
             return ResponseEntity.ok(message);
-        }
-        else if (phoneNum==null) {
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("전화번호를 다시입력해주세요");
+        } else if (phoneNum == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("전화번호를 다시입력해주세요");
 
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("일치하는 id가 없습니다.");
         }
     }
+
     //비밀번호 찾기
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     @PostMapping("/findPw")
-    public ResponseEntity<String> findPw( @Valid @RequestBody UserPwRequestDto userPwRequestDto) {
+    public ResponseEntity<String> findPw(@Valid @RequestBody UserPwRequestDto userPwRequestDto) {
 
         String newPw = userService.updateAndReturnTempPassword(userPwRequestDto.getUserId(), userPwRequestDto.getPhoneNum());
-        if (newPw!=null) {
+        if (newPw != null) {
 
 
             String message = "임시비밀번호는 " + newPw + "입니다";
             return ResponseEntity.ok(message);
-        }
-        else  {
+        } else {
             return new ResponseEntity<>("입력정보를 다시 입력해주세요", HttpStatus.BAD_REQUEST);
         }
-
-
-
-
 
 
     }
 
 
-
-    //회원가입
+    //일반 사용자 회원가입
     @PostMapping("/register")
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
-    public ResponseEntity<String> createUser( @Valid @RequestBody UserFormDto userFormDto) {
+    public ResponseEntity<String> createUser(@Valid @RequestBody UserFormDto userFormDto) {
 
         String userId = userFormDto.getUserId();
         boolean isUnique = userService.isUserIdUnique(userId);
@@ -108,7 +100,9 @@ public class UserController {
         }
         userService.signup(userFormDto);
 
-         return ResponseEntity.ok("회원가입이 완료되었습니다.");
-        }
-
+        return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
+
+
+
+}
