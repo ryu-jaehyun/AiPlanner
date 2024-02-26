@@ -1,4 +1,4 @@
-package Project.AiPlanner.User.service;
+package Project.AiPlanner.Setting.service;
 
 
 import Project.AiPlanner.User.Dto.UserPlanTypeColorDto;

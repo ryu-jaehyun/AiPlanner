@@ -1,8 +1,8 @@
-package Project.AiPlanner.User.controller;
+package Project.AiPlanner.Setting.controller;
 
 
 import Project.AiPlanner.User.Dto.UserPlanTypeColorDto;
-import Project.AiPlanner.User.service.UserPlanTypeService;
+import Project.AiPlanner.Setting.service.UserPlanTypeService;
 import Project.AiPlanner.Util.SecurityUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user-plan")
+@RequestMapping("/setting")
 public class UserPlanContoller {
     private final UserPlanTypeService userPlanTypeService;
 

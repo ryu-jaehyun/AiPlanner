@@ -93,7 +93,7 @@ public class UserController {
 
 
     //일반 사용자 회원가입
-    @PostMapping("/register")
+    @PostMapping("/signup")
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> createUser(@Valid @RequestBody UserFormDto userFormDto) {
 
@@ -106,7 +106,7 @@ public class UserController {
 
         return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
-    @PostMapping("/register/admin")
+    @PostMapping("/signup/admin")
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<String> createAdmin(@Valid @RequestBody AdminRegistrationDto adminDto) {
 
