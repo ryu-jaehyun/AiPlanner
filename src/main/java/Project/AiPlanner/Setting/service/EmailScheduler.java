@@ -18,7 +18,7 @@ public class EmailScheduler {
     @Autowired
     private DayPlanService dayPlanService;
 
-    @Scheduled(fixedRate = 24 * 60 * 60 * 1000) // 매일 자정에 실행 (하루마다)
+    @Scheduled(cron = "0 0 23 * * ?") // 매일 오후 11시에 실행
     public void sendEmailForUpcomingDayPlans() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime oneDayAgo = now.minusDays(1);
