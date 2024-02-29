@@ -42,12 +42,17 @@ public class AuthController {
         System.out.println("authentication = " + authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = tokenProvider.createToken(authentication);
-        log.info("jwt={}", jwt);
+        // 액세스 토큰 생성
+        String accessToken = tokenProvider.createToken(authentication);
 
+        // 리프레시 토큰 생성
+        String refreshToken = tokenProvider.createRefreshToken(authentication);
+
+        // 클라이언트에게 액세스 토큰과 리프레시 토큰 반환
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + accessToken);
+        return ResponseEntity.ok()
+                .headers(httpHeaders)
+                .body(new TokenDto(accessToken, refreshToken));
     }
 }

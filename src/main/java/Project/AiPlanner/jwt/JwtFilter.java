@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -36,9 +37,19 @@ public class JwtFilter extends GenericFilterBean {
             logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
         } else {
             logger.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
-        }
+            // 액세스 토큰이 만료되었고, 리프레시 토큰이 있다면 새로운 액세스 토큰 발급
+            if (StringUtils.hasText(jwt) && tokenProvider.validateRefreshToken(jwt)) {
+                // 새로운 액세스 토큰 생성
+                String newJwt = tokenProvider.createTokenFromRefreshToken(jwt);
 
-        filterChain.doFilter(servletRequest, servletResponse);
+                // 생성된 새로운 액세스 토큰을 HTTP 응답 헤더에 포함시켜 클라이언트에 반환
+                HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+                httpServletResponse.setHeader(AUTHORIZATION_HEADER, "Bearer " + newJwt);
+                logger.debug("새로운 액세스 토큰이 발급되었습니다, uri: {}", requestURI);
+            }
+
+            filterChain.doFilter(servletRequest, servletResponse);
+        }
     }
 
     private String resolveToken(HttpServletRequest request) {

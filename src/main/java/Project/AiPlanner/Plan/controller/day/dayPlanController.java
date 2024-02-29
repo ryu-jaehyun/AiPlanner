@@ -12,6 +12,7 @@ import Project.AiPlanner.Util.SecurityUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -107,7 +108,7 @@ public class dayPlanController {
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
     public ResponseEntity<Object> getDayPlan() {
         String userId = SecurityUtil.getCurrentUserId();
-        List<DayPlanEntity> dayPlanEntities = dayPlanRepository.findByUserId(userId);
+        List<DayPlanEntity> dayPlanEntities = dayPlanService.getDayPlanByUserId(userId);
         return ResponseEntity.ok(dayPlanEntities);
     }
 

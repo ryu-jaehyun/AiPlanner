@@ -3,8 +3,10 @@ package Project.AiPlanner;
 import Project.AiPlanner.User.entity.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootTest
+@EnableCaching
 class AiPlannerApplicationTests {
 
 	@Test

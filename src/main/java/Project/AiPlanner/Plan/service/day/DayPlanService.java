@@ -12,6 +12,7 @@ import Project.AiPlanner.Setting.dto.DayTypeColorDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,6 +59,9 @@ public class DayPlanService {
                 .collect(Collectors.toList());
     }
 
+    public List<DayPlanEntity> getDayPlanByUserId(String userId) {
+        return dayPlanRepository.findByUserId(userId);
+    }
     public DayPlanDto convertToFixDto(DayPlanEntity entity) {
         return modelMapper.map(entity, DayPlanDto.class);
         // Assuming ModelMapper is used for mapping between entity and DTO
