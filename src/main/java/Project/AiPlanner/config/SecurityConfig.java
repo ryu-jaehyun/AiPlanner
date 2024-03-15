@@ -50,7 +50,7 @@ public class SecurityConfig {
         http
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors
+                /*.cors(cors -> cors
                         .configurationSource(request -> {
                             CorsConfiguration config = new CorsConfiguration();
                             config.setAllowedOrigins(Collections.singletonList("http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/"));
@@ -58,7 +58,7 @@ public class SecurityConfig {
                             config.setAllowedHeaders(Collections.singletonList("*"));
                             return config;
                         })
-                )
+                )*/
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(jwtAccessDeniedHandler)
