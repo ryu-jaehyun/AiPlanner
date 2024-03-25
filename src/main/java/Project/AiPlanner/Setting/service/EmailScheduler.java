@@ -24,11 +24,23 @@ public class EmailScheduler {
         LocalDateTime oneDayAgo = now.minusDays(1);
 
         List<DayPlanAlarmDto> upcomingDayPlans = dayPlanService.getUpcomingDayPlans(oneDayAgo);
+        StringBuilder textBuilder = new StringBuilder();
+        textBuilder.append("일정 알림\n\n");
 
         for (DayPlanAlarmDto dayPlan : upcomingDayPlans) {
+            textBuilder.append("일정: ");
+            textBuilder.append(dayPlan.getPlanName());
+            textBuilder.append("\n");
+            textBuilder.append("시작 시간: ");
+            textBuilder.append(dayPlan.getStart()); // 시작 시간 추가
+            textBuilder.append("\n");
+            textBuilder.append("마지막 시간: ");
+            textBuilder.append(dayPlan.getEnd()); // 마지막 시간 추가
+            textBuilder.append("\n\n");
+
             String to = dayPlan.getEmail(); // 수신자 이메일 주소
             String subject = "일정 알림";
-            String text = "일정 '" + dayPlan.getPlanName() + "'의 시작 시간이 하루 남았습니다.";
+            String text = textBuilder.toString();
             emailService.sendSimpleMessage(to, subject, text);
         }
     }
