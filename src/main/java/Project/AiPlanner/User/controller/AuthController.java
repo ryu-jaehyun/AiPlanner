@@ -29,7 +29,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @CrossOrigin(origins = "http://ec2-13-125-51-122.ap-northeast-2.compute.amazonaws.com:3000/")
-    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<String> authorize(@Valid @RequestBody LoginDto loginDto) {
 
 
         log.info("loginDto= {},{}", loginDto.getUserId(), loginDto.getUserPw());
@@ -51,8 +51,10 @@ public class AuthController {
         // 클라이언트에게 액세스 토큰과 리프레시 토큰 반환
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + accessToken);
-        return ResponseEntity.ok()
-                .headers(httpHeaders)
-                .body(new TokenDto(accessToken, refreshToken));
+        httpHeaders.add("Refresh-Token", "Bearer " + refreshToken);
+        String successMessage = "로그인에 성공했습니다.";
+
+        return ResponseEntity.ok().headers(httpHeaders)
+                .body(successMessage);
     }
 }
